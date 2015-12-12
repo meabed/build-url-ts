@@ -1,0 +1,26 @@
+{
+  "name": "build-url",
+  "version": "0.0.1",
+  "description": "A small library that builds a URL given it's components",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/jasmine/bin/jasmine.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steverydz/build-url.git"
+  },
+  "keywords": [
+    "url",
+    "uri"
+  ],
+  "author": "Steve Rydz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/steverydz/build-url/issues"
+  },
+  "homepage": "https://github.com/steverydz/build-url#readme",
+  "devDependencies": {
+    "jasmine": "2.4.1"
+  }
+}
