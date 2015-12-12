@@ -5,7 +5,6 @@ const git = require('gulp-git');
 const bump = require('gulp-bump');
 const filter = require('gulp-filter');
 const tagVersion = require('gulp-tag-version');
-const shell = require('gulp-shell');
 
 const inc = (importance) => {
   return gulp.src('./package.json')
@@ -13,14 +12,7 @@ const inc = (importance) => {
     .pipe(gulp.dest('.'))
     .pipe(git.commit('Bump version'))
     .pipe(filter('package.json'))
-    .pipe(tagVersion())
-    .pipe(git.push('origin', 'master', {
-      args: '--tags'
-    }, (error) => {
-      if (error) {
-        throw error;
-      }
-    }));
+    .pipe(tagVersion());
 };
 
 gulp.task('uglify', () => {
@@ -54,15 +46,12 @@ gulp.task('release', () => {
 gulp.task('publish', () => {
   if (process.argv.indexOf('--patch') !== -1) {
     gulp.run('patch');
-    shell.task(['npm publish']);
   }
   if (process.argv.indexOf('--feature') !== -1) {
     gulp.run('minor');
-    shell.task(['npm publish']);
   }
   if (process.argv.indexOf('--release') !== -1) {
     gulp.run('release');
-    shell.task(['npm publish']);
   }
 });
 
