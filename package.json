@@ -1,6 +1,6 @@
 {
   "name": "build-url",
-  "version": "0.0.12",
+  "version": "1.0.0",
   "description": "A small library that builds a URL given it's components",
   "main": "./dist/build-url.js",
   "scripts": {
@@ -13,8 +13,19 @@
   "keywords": [
     "url",
     "uri",
-    "url builder",
-    "uri builder"
+    "builder",
+    "build",
+    "concat",
+    "concatenate",
+    "append",
+    "path",
+    "hash",
+    "query",
+    "string",
+    "querystring",
+    "parameters",
+    "params",
+    "queryparams"
   ],
   "author": "Steve Rydz",
   "license": "MIT",
@@ -24,7 +35,6 @@
   "homepage": "https://github.com/steverydz/build-url#readme",
   "devDependencies": {
     "gulp": "3.9.0",
-    "gulp-bump": "1.0.0",
     "gulp-header": "1.7.1",
     "gulp-rename": "1.2.2",
     "gulp-uglify": "1.5.1",
