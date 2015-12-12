@@ -13,7 +13,14 @@ const inc = (importance) => {
     .pipe(gulp.dest('.'))
     .pipe(git.commit('Bump version'))
     .pipe(filter('package.json'))
-    .pipe(tagVersion());
+    .pipe(tagVersion())
+    .pipe(git.push('origin', 'master', {
+      args: '--tags'
+    }, (error) => {
+      if (error) {
+        throw error;
+      }
+    }));
 };
 
 gulp.task('uglify', () => {
