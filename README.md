@@ -1,5 +1,7 @@
 # build-url
 
+[![Build Status](https://travis-ci.org/steverydz/build-url.svg?branch=master)](https://travis-ci.org/steverydz/build-url)
+
 A library that builds a URL, including it's path, query parameters and fragment identifier.
 
 ## Usage
