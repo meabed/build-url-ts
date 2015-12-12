@@ -1,8 +1,8 @@
 {
   "name": "build-url",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A small library that builds a URL given it's components",
-  "main": "index.js",
+  "main": "src/build-url.js",
   "scripts": {
     "test": "./node_modules/jasmine/bin/jasmine.js"
   },
