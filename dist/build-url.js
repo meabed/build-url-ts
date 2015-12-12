@@ -1,8 +1,8 @@
 /**
- * A function that builds a URL based on the arguments it's given
- * @param  {String} url     The first part of the URL e.g. `http://example.com`
- * @param  {Object} options A hash of options e.g. `{ path: '/about', hash: '#contact', queryParams: {}}`
- * @return {String}         The complete URL e.g. `http://example.com/about?foo=bar#contact`
+ * build-url - A small library that builds a URL given it's components
+ * @version v0.0.9
+ * @link https://github.com/steverydz/build-url#readme
+ * @license MIT
  */
 ;(function () {
   'use strict';

@@ -5,6 +5,16 @@ const git = require('gulp-git');
 const bump = require('gulp-bump');
 const filter = require('gulp-filter');
 const tagVersion = require('gulp-tag-version');
+const header = require('gulp-header');
+const pkg = require('./package.json');
+const banner = [
+  '/**',
+  ' * <%= pkg.name %> - <%= pkg.description %>',
+  ' * @version v<%= pkg.version %>',
+  ' * @link <%= pkg.homepage %>',
+  ' * @license <%= pkg.license %>',
+  ' */\n'
+].join('\n');
 
 const inc = (importance) => {
   return gulp.src('./package.json')
@@ -19,11 +29,13 @@ gulp.task('uglify', () => {
   gulp.src('./src/build-url.js')
     .pipe(uglify())
     .pipe(rename('build-url.min.js'))
+    .pipe(header(banner, { pkg: pkg }))
     .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('copy', () => {
   gulp.src('./src/build-url.js')
+    .pipe(header(banner, { pkg: pkg }))
     .pipe(gulp.dest('./dist'));
 });
 

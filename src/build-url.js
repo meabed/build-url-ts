@@ -1,9 +1,3 @@
-/**
- * A function that builds a URL based on the arguments it's given
- * @param  {String} url     The first part of the URL e.g. `http://example.com`
- * @param  {Object} options A hash of options e.g. `{ path: '/about', hash: '#contact', queryParams: {}}`
- * @return {String}         The complete URL e.g. `http://example.com/about?foo=bar#contact`
- */
 ;(function () {
   'use strict';
 
