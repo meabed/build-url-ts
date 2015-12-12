@@ -1,5 +1,5 @@
 describe('buildUrl', function () {
-  var buildUrl = require('../src/build-url');
+  var buildUrl = require('../dist/build-url');
 
   it('should be defined', function () {
     expect(buildUrl).toBeDefined();
