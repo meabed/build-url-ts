@@ -1,6 +1,6 @@
 {
   "name": "build-url",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A small library that builds a URL given it's components",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,9 @@
   },
   "keywords": [
     "url",
-    "uri"
+    "uri",
+    "url builder",
+    "uri builder"
   ],
   "author": "Steve Rydz",
   "license": "MIT",
