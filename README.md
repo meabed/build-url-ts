@@ -33,4 +33,19 @@ buildUrl('http://example.com', {
     bar: 'baz'
   }
 });
+
+// returns http://example.com/about#contact?foo=bar&bar=baz
+```
+
+If you pass an array to the `queryParams` object, it will be transformed to a comma separated list:
+
+```
+buildUrl('http://example.com', {
+  queryParams: {
+    foo: 'bar',
+    bar: ['one', 'two', 'three']
+  }
+});
+
+// returns http://example.com?foo=bar&bar=one,two,three
 ```

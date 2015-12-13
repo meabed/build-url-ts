@@ -28,6 +28,15 @@ describe('buildUrl', function () {
     })).toEqual('http://example.com?foo=bar&bar=baz');
   });
 
+  it('should transform an array to a comma separated list if part of queryParams', function () {
+    expect(buildUrl('http://example.com', {
+      queryParams: {
+        foo: 'bar',
+        bar: ['one', 'two', 'three']
+      }
+    })).toEqual('http://example.com?foo=bar&bar=one,two,three');
+  });
+
   it('should append a fragment identifier when passed as an option', function () {
     expect(buildUrl('http://example.com', {
       hash: 'contact'
