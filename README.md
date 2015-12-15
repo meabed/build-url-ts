@@ -34,7 +34,7 @@ buildUrl('http://example.com', {
   }
 });
 
-// returns http://example.com/about#contact?foo=bar&bar=baz
+// returns http://example.com/about?foo=bar&bar=baz#contact
 ```
 
 If you pass an array to the `queryParams` object, it will be transformed to a comma separated list:
