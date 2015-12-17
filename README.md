@@ -49,3 +49,7 @@ buildUrl('http://example.com', {
 
 // returns http://example.com?foo=bar&bar=one,two,three
 ```
+
+## License
+
+This is licensed under an MIT License. [See details](LICENSE)
