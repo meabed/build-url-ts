@@ -1,0 +1,41 @@
+{
+  "name": "build-url",
+  "description": "A small library that builds a URL given it's components",
+  "main": "./dist/build-url.js",
+  "authors": [
+    "Steve Rydz"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "url",
+    "uri",
+    "builder",
+    "build",
+    "concat",
+    "concatenate",
+    "append",
+    "path",
+    "hash",
+    "query",
+    "string",
+    "querystring",
+    "parameters",
+    "params",
+    "queryparams"
+  ],
+  "homepage": "https://github.com/steverydz/build-url",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "spec"
+  ]
+}
