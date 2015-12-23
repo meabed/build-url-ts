@@ -4,19 +4,63 @@
 
 A library that builds a URL, including it's path, query parameters and fragment identifier. Works in node and in the browser.
 
-## Usage
+## Installation
+
+To install with bower:
+```
+bower install build-url --save
+```
+
+To install with npm:
 
 ```
 npm install build-url --save
 ```
 
-If using node:
+## Usage
+
+Usage in the browser:
+
+```
+<script src="../path/to/lib/build-url.js"></script>
+<script>
+buildUrl('http://example.com', {
+  path: 'about',
+  hash: 'contact',
+  queryParams: {
+    foo: bar,
+    bar: ['foo', 'bar']
+  }
+});
+</script>
+```
+
+Usage with ES6 modules:
+```
+import buildUrl from '../path/to/lib/build-url';
+
+buildUrl('http://example.com', {
+  path: 'about',
+  hash: 'contact',
+  queryParams: {
+    foo: bar,
+    bar: ['foo', 'bar']
+  }
+});
+```
+
+Usage with node:
 
 ```
 var buildUrl = require('build-url');
 
 buildUrl('http://example.com', {
-  path: 'about'
+  path: 'about',
+  hash: 'contact',
+  queryParams: {
+    foo: bar,
+    bar: ['foo', 'bar']
+  }
 });
 ```
 
