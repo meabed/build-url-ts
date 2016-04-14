@@ -80,4 +80,100 @@ describe('buildUrl', function () {
       }
     })).toEqual('http://example.com?foo=bar&bar=baz#contact');
   });
+
+  it('should return only the query string when URL parameter is an empty string', function () {
+    expect(buildUrl('', {
+      queryParams: {
+        foo: 'bar',
+        bar: 'baz'
+      }
+    })).toEqual('?foo=bar&bar=baz');
+  });
+
+  it('should return only the query string when URL parameter is null', function () {
+    expect(buildUrl(null, {
+      queryParams: {
+        foo: 'bar',
+        bar: 'baz'
+      }
+    })).toEqual('?foo=bar&bar=baz');
+  });
+
+  it('should return only the query string when URL parameter is not present', function () {
+    expect(buildUrl({
+      queryParams: {
+        foo: 'bar',
+        bar: 'baz'
+      }
+    })).toEqual('?foo=bar&bar=baz');
+  });
+
+  it('should return only the hash when URL parameter is an empty string', function () {
+    expect(buildUrl('', {
+      hash: 'about'
+    })).toEqual('#about');
+  });
+
+  it('should return only the hash when URL parameter is null', function () {
+    expect(buildUrl(null, {
+      hash: 'about'
+    })).toEqual('#about');
+  });
+
+  it('should return only the has when URL parameter is not present', function () {
+    expect(buildUrl({
+      hash: 'about'
+    })).toEqual('#about');
+  });
+
+  it('should return only the path when URL parameter is an empty string', function () {
+    expect(buildUrl('', {
+      path: 'contact'
+    })).toEqual('/contact');
+  });
+
+  it('should return only the path when URL parameter is null', function () {
+    expect(buildUrl(null, {
+      path: 'contact'
+    })).toEqual('/contact');
+  });
+
+  it('should return only the path when URL parameter is not present', function () {
+    expect(buildUrl({
+      path: 'contact'
+    })).toEqual('/contact');
+  });
+
+  it('should return only formatted options when URL parameter is an empty string', function () {
+    expect(buildUrl('', {
+      path: 'contact',
+      hash: 'about',
+      queryParams: {
+        foo: 'bar',
+        bar: 'baz'
+      }
+    })).toEqual('/contact?foo=bar&bar=baz#about');
+  });
+
+  it('should return only formatted options when URL parameter is null', function () {
+    expect(buildUrl(null, {
+      path: 'contact',
+      hash: 'about',
+      queryParams: {
+        foo: 'bar',
+        bar: 'baz'
+      }
+    })).toEqual('/contact?foo=bar&bar=baz#about');
+  });
+
+  it('should return only formatted options when URL parameter is not present', function () {
+    expect(buildUrl({
+      path: 'contact',
+      hash: 'about',
+      queryParams: {
+        foo: 'bar',
+        bar: 'baz'
+      }
+    })).toEqual('/contact?foo=bar&bar=baz#about');
+  });
 });
