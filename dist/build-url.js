@@ -1,6 +1,6 @@
 /**
  * build-url - A small library that builds a URL given it's components
- * @version v1.0.1
+ * @version v1.0.6
  * @link https://github.com/steverydz/build-url#readme
  * @license MIT
  */
@@ -13,7 +13,16 @@
   var buildUrl = function (url, options) {
     var queryString = [];
     var key;
-    var builtUrl = url;
+    var builtUrl;
+
+    if (url === null) {
+      builtUrl = '';
+    } else if (typeof(url) === 'object') {
+      builtUrl = '';
+      options = url;
+    } else {
+      builtUrl = url;
+    }
 
     if (options) {
       if (options.path) {

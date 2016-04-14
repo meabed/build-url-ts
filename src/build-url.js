@@ -7,7 +7,16 @@
   var buildUrl = function (url, options) {
     var queryString = [];
     var key;
-    var builtUrl = url;
+    var builtUrl;
+
+    if (url === null) {
+      builtUrl = '';
+    } else if (typeof(url) === 'object') {
+      builtUrl = '';
+      options = url;
+    } else {
+      builtUrl = url;
+    }
 
     if (options) {
       if (options.path) {
