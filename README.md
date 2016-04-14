@@ -94,6 +94,35 @@ buildUrl('http://example.com', {
 // returns http://example.com?foo=bar&bar=one,two,three
 ```
 
+If you only want the query string, path, hash, or any combination of the three you can skip the URL parameter or pass in an empty string or null:
+
+```
+buildUrl('', {
+  queryParams: {
+    foo: 'bar',
+    bar: 'baz'
+  }
+});
+
+// returns ?foo=bar&bar=baz
+
+buildUrl(null, {
+  queryParams: {
+    foo: 'bar',
+    bar: 'baz'
+  }
+});
+
+// returns ?foo=bar&bar=baz
+
+buildUrl({
+  queryParams: {
+    foo: 'bar',
+    bar: 'baz'
+  }
+});
+```
+
 ## License
 
 This is licensed under an MIT License. [See details](LICENSE)
