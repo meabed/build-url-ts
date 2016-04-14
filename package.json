@@ -34,10 +34,10 @@
   },
   "homepage": "https://github.com/steverydz/build-url#readme",
   "devDependencies": {
-    "gulp": "3.9.0",
+    "gulp": "3.9.1",
     "gulp-header": "1.7.1",
     "gulp-rename": "1.2.2",
-    "gulp-uglify": "1.5.1",
+    "gulp-uglify": "1.5.3",
     "jasmine": "2.4.1"
   }
 }
