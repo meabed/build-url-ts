@@ -26,7 +26,11 @@
 
     if (options) {
       if (options.path) {
-        builtUrl += '/' + options.path;
+        if (options.path.indexOf('/') === 0) {
+          builtUrl += options.path;
+        } else {
+          builtUrl += '/' + options.path;
+        }
       }
 
       if (options.queryParams) {

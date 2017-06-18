@@ -19,6 +19,12 @@ describe('buildUrl', function () {
     })).toEqual('http://example.com/about/me');
   });
 
+  it('should append a path when passed an option with a leading "/"', function() {
+    expect(buildUrl('http://example.com', {
+      path: '/about/me'
+    })).toEqual('http://example.com/about/me');
+  });
+
   it('should append a query string when passed as an option', function () {
     expect(buildUrl('http://example.com', {
       queryParams: {
