@@ -182,4 +182,13 @@ describe('buildUrl', function () {
       }
     })).toEqual('/contact?foo=bar&bar=baz#about');
   });
+
+  it('should not append a queryParam if it\'s undefined', function () {
+    expect(buildUrl('http://example.com', {
+      queryParams: {
+        foo: 'bar',
+        bar: void 0
+      }
+    })).toEqual('http://example.com?foo=bar');
+  });
 });
