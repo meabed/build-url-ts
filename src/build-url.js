@@ -29,7 +29,8 @@
 
       if (options.queryParams) {
         for (key in options.queryParams) {
-          if (options.queryParams.hasOwnProperty(key)) {
+          if (options.queryParams.hasOwnProperty(key)
+              && options.queryParams[key] !== void 0) {
             queryString.push(key + '=' + options.queryParams[key]);
           }
         }
