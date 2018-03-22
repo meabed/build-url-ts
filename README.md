@@ -70,7 +70,7 @@ The `buildUrl` function accepts two arguments. The first is a URL e.g. `http://e
 
 ```
 buildUrl('http://example.com', {
-  path: 'about'
+  path: 'about',
   hash: 'contact',
   queryParams: {
     foo: 'bar',
