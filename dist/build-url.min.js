@@ -1,6 +1,6 @@
 /**
- * build-url - A small library that builds a URL given it's components
- * @version v1.0.9
+ * build-url - A small library that builds a URL given its components
+ * @version v1.0.11
  * @link https://github.com/steverydz/build-url#readme
  * @license MIT
  */
