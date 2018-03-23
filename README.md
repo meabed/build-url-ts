@@ -6,11 +6,6 @@ A library that builds a URL, including it's path, query parameters and fragment 
 
 ## Installation
 
-To install with bower:
-```
-bower install build-url --save
-```
-
 To install with npm:
 
 ```
