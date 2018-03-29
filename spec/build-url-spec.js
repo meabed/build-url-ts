@@ -191,4 +191,10 @@ describe('buildUrl', function () {
       }
     })).toEqual('http://example.com?foo=bar');
   });
+
+  it('should not show a double slash with domain', function () {
+    expect(buildUrl('http://example.com/', {
+      path: '/contact'
+    })).toEqual('http://example.com/contact');
+  });
 });
