@@ -18,6 +18,10 @@
       builtUrl = url;
     }
 
+    if(builtUrl[builtUrl.length - 1] === '/'){
+      builtUrl = builtUrl.slice(0, -1);
+    }
+
     if (options) {
       if (options.path) {
         if (options.path.indexOf('/') === 0) {
