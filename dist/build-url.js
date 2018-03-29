@@ -1,6 +1,6 @@
 /**
  * build-url - A small library that builds a URL given its components
- * @version v1.0.11
+ * @version v1.1.0
  * @link https://github.com/steverydz/build-url#readme
  * @license MIT
  */
@@ -22,6 +22,10 @@
       options = url;
     } else {
       builtUrl = url;
+    }
+
+    if(builtUrl && builtUrl[builtUrl.length - 1] === '/'){
+      builtUrl = builtUrl.slice(0, -1);
     }
 
     if (options) {
