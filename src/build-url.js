@@ -18,7 +18,7 @@
       builtUrl = url;
     }
 
-    if(builtUrl[builtUrl.length - 1] === '/'){
+    if(builtUrl && builtUrl[builtUrl.length - 1] === '/'){
       builtUrl = builtUrl.slice(0, -1);
     }
 
