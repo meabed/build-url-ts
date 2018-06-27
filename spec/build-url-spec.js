@@ -19,7 +19,7 @@ describe('buildUrl', function () {
     })).toEqual('http://example.com/about/me');
   });
 
-  it('should append a path when passed an option with a leading "/"', function() {
+  it('should append a path when passed an option with a leading "/"', function () {
     expect(buildUrl('http://example.com', {
       path: '/about/me'
     })).toEqual('http://example.com/about/me');
@@ -40,7 +40,7 @@ describe('buildUrl', function () {
         foo: 'bar',
         bar: ['one', 'two', 'three']
       }
-    })).toEqual('http://example.com?foo=bar&bar=one,two,three');
+    })).toEqual('http://example.com?foo=bar&bar=one%2Ctwo%2Cthree');
   });
 
   it('should append a fragment identifier when passed as an option', function () {
@@ -197,4 +197,23 @@ describe('buildUrl', function () {
       path: '/contact'
     })).toEqual('http://example.com/contact');
   });
+
+  it('should encode query parameters', () => {
+    const queryParams = {
+      param0: 'Sanford & Sons',
+      param1: 'O\'Reilly',
+      param2: 'Hawai`i',
+      param3: '"Bull" Connor',
+      param4: 'Lech Wałęsa',
+      param5: 'Herr Müller',
+    };
+    const url = buildUrl('https://example.com', { queryParams  });
+    const queryParamString =
+      Object
+        .values(queryParams)
+        .map((param, i) => `param${i}=${encodeURIComponent(param)}`)
+        .join('&')
+
+    expect(url).toEqual(`https://example.com?${queryParamString}`);
+  })
 });
