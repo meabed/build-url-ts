@@ -212,8 +212,8 @@ describe('buildUrl', function () {
       Object
         .values(queryParams)
         .map((param, i) => `param${i}=${encodeURIComponent(param)}`)
-        .join('&')
+        .join('&');
 
     expect(url).toEqual(`https://example.com?${queryParamString}`);
-  })
+  });
 });
