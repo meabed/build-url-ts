@@ -1,6 +1,6 @@
 {
   "name": "build-url",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "A small library that builds a URL given its components",
   "main": "./dist/build-url.js",
   "scripts": {
@@ -34,10 +34,10 @@
   },
   "homepage": "https://github.com/steverydz/build-url#readme",
   "devDependencies": {
-    "gulp": "3.9.1",
-    "gulp-header": "1.7.1",
-    "gulp-rename": "1.2.2",
-    "gulp-uglify": "1.5.3",
-    "jasmine": "2.4.1"
+    "gulp": "^3.9.1",
+    "gulp-header": "2.0.5",
+    "gulp-rename": "1.4.0",
+    "gulp-uglify": "3.0.1",
+    "jasmine": "3.2.0"
   }
 }
