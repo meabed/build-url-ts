@@ -4,16 +4,17 @@
   var root = this;
   var previousBuildUrl = root.buildUrl;
 
-  var buildUrl = function (url, options, lowerCase) {
+  var buildUrl = function (url, options) {
     var queryString = [];
     var key;
     var builtUrl;
-    var caseChange;
+    var caseChange; 
     
-    if (lowerCase === undefined) {
-       caseChange = false;
+    // 'lowerCase' parameter default = false,  
+    if (options && options.lowerCase) {
+        caseChange = !!options.lowerCase;
     } else {
-       caseChange = !!lowerCase;
+        caseChange = false;
     }
 
     if (url === null) {
@@ -31,9 +32,9 @@
 
     if (options) {
       if (options.path) {
-          var localVar = String(options.path).trim();
+          var localVar = String(options.path).trim(); //Lets store and trim extra space from 'path' varibale
           if (caseChange) {
-            localVar = localVar.toLowerCase();
+            localVar = localVar.toLowerCase(); // Change to lowercase
           }
           if (localVar.indexOf('/') === 0) {
               builtUrl += localVar;

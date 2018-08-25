@@ -243,10 +243,24 @@ describe('buildUrl', function () {
     expect(buildUrl('http://example.com', {
       path: 'cOnTaCt',
       hash: 'aBOut12',
+      lowerCase: true,
       queryParams: {
         foo: 'barRR',
         bar: 'baZXx                    '
       }
-    }, true)).toEqual('http://example.com/contact?foo=barrr&bar=bazxx#about12');
+    })).toEqual('http://example.com/contact?foo=barrr&bar=bazxx#about12');
   });
+
+  it('should change case of url path, query string and fragment identifier when passed as options', function () {
+    expect(buildUrl('http://example.com', {
+      path: 'AbouT',
+      hash: 'ConTacT',
+      lowerCase: true,
+      queryParams: {
+        foo: 'bAr',
+        bar: ['oNe', 'TWO', 'thrEE', 123]
+      }
+    })).toEqual('http://example.com/about?foo=bar&bar=one%2Ctwo%2Cthree%2C123#contact');
+  });
+
 });
