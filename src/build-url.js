@@ -34,7 +34,7 @@
       if (options.path) {
           var localVar = String(options.path).trim(); //Lets store and trim extra space from 'path' varibale
           if (caseChange) {
-            localVar = localVar.toLowerCase(); // Change to lowercase
+            localVar = localVar.toLowerCase(); //case change to lowercase
           }
           if (localVar.indexOf('/') === 0) {
               builtUrl += localVar;
@@ -49,10 +49,10 @@
               && options.queryParams[key] !== void 0) {
                 var encodedParam;
                   if (caseChange) {
-                    encodedParam = encodeURIComponent(String(options.queryParams[key]).trim().toLowerCase());
+                    encodedParam = encodeURIComponent(String(options.queryParams[key]).trim().toLowerCase());  //lowercase conversion if caseChange is true
                   }
                   else {
-                    encodedParam = encodeURIComponent(String(options.queryParams[key]).trim());
+                    encodedParam = encodeURIComponent(String(options.queryParams[key]).trim()); 
                   }
             queryString.push(key + '=' + encodedParam);
           }

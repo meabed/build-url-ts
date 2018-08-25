@@ -89,7 +89,7 @@ buildUrl('http://example.com', {
 // returns http://example.com?foo=bar&bar=one,two,three
 ```
 
-If you want to change the `path`, `hash` and `queryParams` case to all lowercase  then pass `lowerCase` as true in arguments:
+If you want to change the `path`, `hash` and `queryParams` case to all lowercase  then pass `lowerCase` as true in arguments, default value of this will be `false`:
 
 ```
 buildUrl('http://example.com', {
