@@ -8,6 +8,14 @@
     var queryString = [];
     var key;
     var builtUrl;
+    var caseChange; 
+    
+    // 'lowerCase' parameter default = false,  
+    if (options && options.lowerCase) {
+        caseChange = !!options.lowerCase;
+    } else {
+        caseChange = false;
+    }
 
     if (url === null) {
       builtUrl = '';
@@ -18,24 +26,34 @@
       builtUrl = url;
     }
 
-    if(builtUrl && builtUrl[builtUrl.length - 1] === '/'){
+    if(builtUrl && builtUrl[builtUrl.length - 1] === '/') {
       builtUrl = builtUrl.slice(0, -1);
-    }
+    } 
 
     if (options) {
       if (options.path) {
-        if (options.path.indexOf('/') === 0) {
-          builtUrl += options.path;
-        } else {
-          builtUrl += '/' + options.path;
-        }
+          var localVar = String(options.path).trim(); 
+          if (caseChange) {
+            localVar = localVar.toLowerCase();
+          }
+          if (localVar.indexOf('/') === 0) {
+              builtUrl += localVar;
+          } else {
+            builtUrl += '/' + localVar;
+          }
       }
 
       if (options.queryParams) {
         for (key in options.queryParams) {
           if (options.queryParams.hasOwnProperty(key)
               && options.queryParams[key] !== void 0) {
-            var encodedParam = encodeURIComponent(options.queryParams[key])
+                var encodedParam;
+                  if (caseChange) {
+                    encodedParam = encodeURIComponent(String(options.queryParams[key]).trim().toLowerCase());  
+                  }
+                  else {
+                    encodedParam = encodeURIComponent(String(options.queryParams[key]).trim()); 
+                  }
             queryString.push(key + '=' + encodedParam);
           }
         }
@@ -43,10 +61,12 @@
       }
 
       if (options.hash) {
-        builtUrl += '#' + options.hash;
+        if(caseChange)
+            builtUrl += '#' + String(options.hash).trim().toLowerCase();
+        else
+            builtUrl += '#' + String(options.hash).trim();
       }
-    }
-
+    } 
     return builtUrl;
   };
 

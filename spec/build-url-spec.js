@@ -216,4 +216,62 @@ describe('buildUrl', function () {
 
     expect(url).toEqual(`https://example.com?${queryParamString}`);
   });
+
+  it('should trim unwanted whitespace from path, query string and a fragment identifier which passed as options', function () {
+    expect(buildUrl('http://example.com', {
+      path: '  contact  ',
+      hash: ' about ',
+      queryParams: {
+        foo: ' bar ',
+        bar: ' baz '
+      }
+    })).toEqual('http://example.com/contact?foo=bar&bar=baz#about');
+  });
+
+  it('should append a path, query string and a fragment identifier when passed as options which is of number type', function () {
+    expect(buildUrl('http://example.com', {
+      path: 12345,
+      hash: 75885,
+      queryParams: {
+        foo: 12454,
+        bar: 123457
+      }
+    })).toEqual('http://example.com/12345?foo=12454&bar=123457#75885');
+  });
+  
+  it("should change case of url path, query string and fragment identifier when lowerCase parameter passed as options with value 'true' ", function () {
+    expect(buildUrl('http://example.com', {
+      path: 'cOnTaCt',
+      hash: 'aBOut12',
+      lowerCase: true,
+      queryParams: {
+        foo: 'barRR',
+        bar: 'baZXx                    '
+      }
+    })).toEqual('http://example.com/contact?foo=barrr&bar=bazxx#about12');
+  });
+
+  it("should not change case of url path, query string and fragment identifier when lowerCase parameter passed as options with  value 'false' ", function () {
+    expect(buildUrl('http://example.com', {
+      path: 'AbouT',
+      hash: 'ConTacT',
+      lowerCase: false,
+      queryParams: {
+        foo: 'bAr',
+        bar: ['oNe', 'TWO', 'thrEE', 123]
+      }
+    })).toEqual('http://example.com/AbouT?foo=bAr&bar=oNe%2CTWO%2CthrEE%2C123#ConTacT');
+  });
+
+  it("should not change case of url path, query string and fragment identifier when when lowerCase parameter is not passed as argument", function () {
+    expect(buildUrl('http://example.com', {
+      path: 'AbouT',
+      hash: 'ConTacT',
+      queryParams: {
+        foo: 'bAr',
+        bar: ['oNe', 'TWO', 'thrEE', 123]
+      }
+    })).toEqual('http://example.com/AbouT?foo=bAr&bar=oNe%2CTWO%2CthrEE%2C123#ConTacT');
+  });
+
 });
