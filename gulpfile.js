@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const header = require('gulp-header');
+const pump = require('pump');
 const pkg = require('./package.json');
 const banner = [
   '/**',
@@ -12,23 +13,24 @@ const banner = [
   ' */\n'
 ].join('\n');
 
-gulp.task('uglify', () => {
-  gulp.src('./src/build-url.js')
-    .pipe(uglify())
-    .pipe(rename('build-url.min.js'))
-    .pipe(header(banner, { pkg: pkg }))
-    .pipe(gulp.dest('./dist'));
-});
+function compress(cb) {
+  pump([
+    gulp.src('./src/build-url.js'),
+    rename('build-url.min.js'),
+    uglify(),
+    gulp.dest('./dist')
+  ], cb);
+}
 
-gulp.task('copy', () => {
-  gulp.src('./src/build-url.js')
-    .pipe(header(banner, { pkg: pkg }))
-    .pipe(gulp.dest('./dist'));
-});
+function copy(cb) {
+  pump([
+    gulp.src('./src/build-url.js'),
+    header(banner, { pkg: pkg }),
+    gulp.dest('./dist')
+  ], cb);
+}
 
-gulp.task('watch', () => {
-  gulp.watch('./src/build-url.js', ['build']);
-});
-
-gulp.task('build', ['uglify', 'copy']);
-gulp.task('default', ['build', 'watch']);
+exports.default = gulp.series(
+  compress,
+  copy
+);
