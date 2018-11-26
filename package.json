@@ -3,6 +3,7 @@
   "version": "1.3.0",
   "description": "A small library that builds a URL given its components",
   "main": "./dist/build-url.js",
+  "types": "./build-url.d.ts",
   "scripts": {
     "test": "./node_modules/jasmine/bin/jasmine.js"
   },
