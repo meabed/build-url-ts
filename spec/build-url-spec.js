@@ -274,4 +274,24 @@ describe('buildUrl', function () {
     })).toEqual('http://example.com/AbouT?foo=bAr&bar=oNe%2CTWO%2CthrEE%2C123#ConTacT');
   });
 
+  it("should make array based parameters appear as a separate param for each of the values in array", function() {
+    expect(buildUrl('http://example.com', {
+      disableCSV: true,
+      queryParams: {
+        foo: 'bar',
+        bar: ['one', 'two', 'three']
+      }
+    })).toEqual('http://example.com?foo=bar&bar=one&bar=two&bar=three');
+  });
+
+  it("should keep array based parameters comma separated if disableCSV is not opted in", function() {
+    expect(buildUrl('http://example.com', {
+      disableCSV: false,
+      queryParams: {
+        foo: 'bar',
+        bar: ['one', 'two', 'three']
+      }
+    })).toEqual('http://example.com?foo=bar&bar=one%2Ctwo%2Cthree');
+  });
+
 });
