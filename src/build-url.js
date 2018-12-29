@@ -45,16 +45,22 @@
 
       if (options.queryParams) {
         for (key in options.queryParams) {
-          if (options.queryParams.hasOwnProperty(key)
-              && options.queryParams[key] !== void 0) {
-                var encodedParam;
-                  if (caseChange) {
-                    encodedParam = encodeURIComponent(String(options.queryParams[key]).trim().toLowerCase());  
-                  }
-                  else {
-                    encodedParam = encodeURIComponent(String(options.queryParams[key]).trim()); 
-                  }
-            queryString.push(key + '=' + encodedParam);
+          if (options.queryParams.hasOwnProperty(key) && options.queryParams[key] !== void 0) {
+            var encodedParam;
+            if (options.disableCSV && Array.isArray(options.queryParams[key]) && options.queryParams[key].length) {
+              for(var i = 0; i < options.queryParams[key].length; i++) {
+                encodedParam = encodeURIComponent(String(options.queryParams[key][i]).trim());
+                queryString.push(key + '=' + encodedParam);
+              }
+            } else {              
+              if (caseChange) {
+                encodedParam = encodeURIComponent(String(options.queryParams[key]).trim().toLowerCase());
+              }
+              else {
+                encodedParam = encodeURIComponent(String(options.queryParams[key]).trim());
+              }
+              queryString.push(key + '=' + encodedParam);
+            }
           }
         }
         builtUrl += '?' + queryString.join('&');
