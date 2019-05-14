@@ -13,6 +13,8 @@ declare namespace BuildUrl {
   export interface BuildUrlOptions {
     path?: string;
     hash?: string;
+    lowerCase?: boolean;
+    disableCSV?: boolean;
     queryParams?: { [name: string]: string | string[] };
   }
 }
