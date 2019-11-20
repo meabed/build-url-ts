@@ -294,4 +294,19 @@ describe('buildUrl', function () {
     })).toEqual('http://example.com?foo=bar&bar=one%2Ctwo%2Cthree');
   });
 
+  it('should maintain trailing slash if no options provided', function () {
+    expect(buildUrl('http://example.com/api/v2/')).toEqual('http://example.com/api/v2/');
+  });
+
+  it('should maintain trailing slash if empty path is provided', function () {
+    expect(buildUrl('http://example.com/api/v2/', { path: '' })).toEqual('http://example.com/api/v2/');
+  });
+
+  it('should maintain no trailing slash if one is not present in the url argument', function () {
+    expect(buildUrl('http://example.com/api/v2')).toEqual('http://example.com/api/v2');
+  });
+
+  it('should maintain trailing slash if provided in path', function () {
+    expect(buildUrl('http://example.com/api/v2', { path: '/' })).toEqual('http://example.com/api/v2/');
+  });
 });
