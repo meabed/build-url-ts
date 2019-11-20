@@ -1,6 +1,6 @@
 /**
  * build-url - A small library that builds a URL given its components
- * @version v1.3.2
+ * @version v2.0.0
  * @link https://github.com/steverydz/build-url#readme
  * @license MIT
  */
@@ -16,7 +16,6 @@
     var builtUrl;
     var caseChange; 
     
-    // 'lowerCase' parameter default = false,  
     if (options && options.lowerCase) {
         caseChange = !!options.lowerCase;
     } else {
@@ -32,21 +31,21 @@
       builtUrl = url;
     }
 
-    if(builtUrl && builtUrl[builtUrl.length - 1] === '/') {
-      builtUrl = builtUrl.slice(0, -1);
-    } 
-
     if (options) {
       if (options.path) {
-          var localVar = String(options.path).trim(); 
-          if (caseChange) {
-            localVar = localVar.toLowerCase();
-          }
-          if (localVar.indexOf('/') === 0) {
-              builtUrl += localVar;
-          } else {
-            builtUrl += '/' + localVar;
-          }
+        if(builtUrl && builtUrl[builtUrl.length - 1] === '/') {
+          builtUrl = builtUrl.slice(0, -1);
+        } 
+
+        var localVar = String(options.path).trim(); 
+        if (caseChange) {
+          localVar = localVar.toLowerCase();
+        }
+        if (localVar.indexOf('/') === 0) {
+            builtUrl += localVar;
+        } else {
+          builtUrl += '/' + localVar;
+        }
       }
 
       if (options.queryParams) {
