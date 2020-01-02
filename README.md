@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/steverydz/build-url.svg?branch=master)](https://travis-ci.org/steverydz/build-url)
 
-A library that builds a URL, including it's path, query parameters and fragment identifier. Works in node and in the browser.
+A library that builds a URL, including its path, query parameters and fragment identifier. Works in node and in the browser.
 
 ## Installation
 
