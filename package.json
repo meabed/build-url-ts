@@ -1,6 +1,6 @@
 {
   "name": "build-url",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "A small library that builds a URL given its components",
   "main": "./dist/build-url.js",
   "types": "./build-url.d.ts",

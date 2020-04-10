@@ -1,6 +1,6 @@
 /**
  * build-url - A small library that builds a URL given its components
- * @version v2.0.0
+ * @version v3.0.0
  * @link https://github.com/steverydz/build-url#readme
  * @license MIT
  */
@@ -9,6 +9,10 @@
 
   var root = this;
   var previousBuildUrl = root.buildUrl;
+
+  var encodedParam = function (param) {
+    return param === null ? '' : encodeURIComponent(String(param).trim());
+  };
 
   var buildUrl = function (url, options) {
     var queryString = [];
@@ -51,20 +55,20 @@
       if (options.queryParams) {
         for (key in options.queryParams) {
           if (options.queryParams.hasOwnProperty(key) && options.queryParams[key] !== void 0) {
-            var encodedParam;
+            var param;
             if (options.disableCSV && Array.isArray(options.queryParams[key]) && options.queryParams[key].length) {
               for(var i = 0; i < options.queryParams[key].length; i++) {
-                encodedParam = encodeURIComponent(String(options.queryParams[key][i]).trim());
-                queryString.push(key + '=' + encodedParam);
+                param = options.queryParams[key][i];
+                queryString.push(key + '=' + encodedParam(param));
               }
             } else {              
               if (caseChange) {
-                encodedParam = encodeURIComponent(String(options.queryParams[key]).trim().toLowerCase());
+                param = options.queryParams[key].toLowerCase();
               }
               else {
-                encodedParam = encodeURIComponent(String(options.queryParams[key]).trim());
+                param = options.queryParams[key];
               }
-              queryString.push(key + '=' + encodedParam);
+              queryString.push(key + '=' + encodedParam(param));
             }
           }
         }
