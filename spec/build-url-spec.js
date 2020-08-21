@@ -309,4 +309,13 @@ describe('buildUrl', function () {
   it('should maintain trailing slash if provided in path', function () {
     expect(buildUrl('http://example.com/api/v2', { path: '/' })).toEqual('http://example.com/api/v2/');
   });
+
+  it('should treat null values in query param input as empty strings', function () {
+    expect(buildUrl('http://example.com', {
+      queryParams: {
+        foo: 'bar',
+        bar: null
+      }
+    })).toEqual('http://example.com?foo=bar&bar=');
+  });
 });

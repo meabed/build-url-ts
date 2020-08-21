@@ -149,6 +149,19 @@ buildUrl({
 });
 ```
 
+Any null values in the `queryParams` object will be treated as empty strings:
+
+```
+buildUrl('http://example.com', {
+  queryParams: {
+    foo: 'bar',
+    bar: null
+  }
+});
+
+// returns http://example.com?foo=bar&bar=
+```
+
 ## License
 
 This is licensed under an MIT License. [See details](LICENSE)
