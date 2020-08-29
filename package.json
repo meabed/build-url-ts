@@ -5,6 +5,7 @@
   "main": "./dist/build-url.js",
   "scripts": {
     "build": "webpack",
+    "lint-js": "eslint src/**/*.js",
     "prepublishOnly": "webpack",
     "test": "jest",
     "test-watch": "jest --watch"
