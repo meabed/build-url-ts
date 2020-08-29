@@ -5,7 +5,8 @@
   "main": "./dist/build-url.js",
   "types": "./build-url.d.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepublishOnly": "gulp"
   },
   "repository": {
     "type": "git",
