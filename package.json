@@ -37,11 +37,14 @@
   },
   "homepage": "https://github.com/steverydz/build-url#readme",
   "devDependencies": {
+    "@babel/core": "7.11.4",
+    "@babel/preset-env": "7.11.0",
+    "eslint": "7.7.0",
+    "eslint-config-prettier": "6.11.0",
     "gulp": "4.0.0",
     "gulp-header": "2.0.5",
-    "gulp-rename": "1.4.0",
-    "gulp-uglify": "3.0.1",
     "jest": "26.4.2",
+    "prettier": "2.1.1",
     "pump": "3.0.0"
   }
 }
