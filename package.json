@@ -4,8 +4,8 @@
   "description": "A small library that builds a URL given its components",
   "main": "./dist/build-url.js",
   "scripts": {
-    "build": "gulp",
-    "prepublishOnly": "gulp",
+    "build": "webpack",
+    "prepublishOnly": "webpack",
     "test": "jest",
     "test-watch": "jest --watch"
   },
@@ -39,12 +39,13 @@
   "devDependencies": {
     "@babel/core": "7.11.4",
     "@babel/preset-env": "7.11.0",
+    "babel-loader": "8.1.0",
     "eslint": "7.7.0",
     "eslint-config-prettier": "6.11.0",
-    "gulp": "4.0.0",
-    "gulp-header": "2.0.5",
     "jest": "26.4.2",
     "prettier": "2.1.1",
-    "pump": "3.0.0"
+    "terser-webpack-plugin": "^4.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   }
 }
