@@ -1,6 +1,6 @@
-# build-url
+# build-url-ts
 
-[![Build Status](https://travis-ci.org/steverydz/build-url.svg?branch=master)](https://travis-ci.org/steverydz/build-url)
+[![Build Status](https://travis-ci.org/meabed/build-url.svg?branch=master)](https://travis-ci.org/meabed/build-url)
 
 A library that builds a URL, including its path, query parameters and fragment identifier. Works in node and in the browser.
 
@@ -9,13 +9,13 @@ A library that builds a URL, including its path, query parameters and fragment i
 To install with npm:
 
 ```
-npm install build-url --save
+npm install build-url-ts --save
 ```
 
 ## Usage
 
 ```
-import buildUrl from '../path/to/lib/build-url';
+import buildUrl from 'build-url-ts';
 
 buildUrl('http://example.com', {
   path: 'about',
