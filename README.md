@@ -4,6 +4,8 @@
 
 A library that builds a URL, including its path, query parameters and fragment identifier. Works in node and in the browser.
 
+> This is a fork from https://github.com/steverydz/build-url to add typescript support for the library
+
 ## Installation
 
 To install with npm:
