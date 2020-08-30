@@ -3,6 +3,7 @@
   "version": "5.0.3",
   "description": "A small library that builds a URL given its components",
   "main": "./dist/build-url.js",
+  "types": "./dist/src/build-url.d.ts",
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
     "lint-js": "eslint src/**/*.ts",

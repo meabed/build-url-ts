@@ -1,6 +1,6 @@
-type IQueryParams = Record<
+export type IQueryParams = Record<
   string,
-  string | number | string[] | (string | number)[]
+  null | undefined | string | number | string[] | (string | number)[]
 >;
 
 function buildQueryString(
@@ -8,7 +8,7 @@ function buildQueryString(
   lowerCase?: boolean,
   disableCSV?: boolean
 ) {
-  const queryString = [];
+  const queryString: string[] = [];
 
   for (let key in queryParams) {
     if (
@@ -22,17 +22,17 @@ function buildQueryString(
         Array.isArray(queryParams[key]) &&
         (queryParams[key] as []).length
       ) {
-        for (let i = 0; i < (queryParams[key] as []).length; i++) {
-          param = queryParams[key][i] || "";
+        (queryParams[key] as []).forEach((v) => {
+          param = v !== 0 ? v || "" : 0;
           queryString.push(
             `${key}=${encodeURIComponent(String(param).trim())}`
           );
-        }
+        });
       } else {
         if (lowerCase) {
           param = String(queryParams[key]).toLowerCase() || "";
         } else {
-          param = queryParams[key] || "";
+          param = queryParams[key] !== 0 ? queryParams[key] || "" : 0;
         }
 
         queryString.push(`${key}=${encodeURIComponent(String(param).trim())}`);

@@ -5,8 +5,7 @@ export default {
   input: 'src/build-url.ts',
   output: {
     sourcemap: true,
-    dir: 'dist',
-    format: 'cjs'
+    dir: 'dist'
   },
   plugins: [typescript()]
 };

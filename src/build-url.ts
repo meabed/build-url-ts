@@ -1,9 +1,5 @@
 import { appendPath, buildHash, buildQueryString } from "./utils";
-
-type IQueryParams = Record<
-  string,
-  string | number | string[] | (string | number)[]
->;
+import { IQueryParams } from "./utils/build-query-string";
 
 interface IUrlOptions {
   path?: string | number;
@@ -26,7 +22,7 @@ function buildUrl(url?: string | null | IUrlOptions, options?: IUrlOptions) {
   }
 
   if (options?.path) {
-    builtUrl = appendPath(options.path, builtUrl, options.lowerCase);
+    builtUrl = appendPath(options.path, builtUrl as string, options.lowerCase);
   }
 
   if (options?.queryParams) {

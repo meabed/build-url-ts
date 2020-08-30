@@ -236,6 +236,17 @@ describe("buildUrl", () => {
     ).toEqual("http://example.com?foo=bar");
   });
 
+  it("should not append a queryParam if it's number", () => {
+    expect(
+      buildUrl("http://example.com", {
+        queryParams: {
+          foo: "bar",
+          bar0: 0,
+        },
+      })
+    ).toEqual("http://example.com?foo=bar&bar0=0");
+  });
+
   it("should not show a double slash with domain", () => {
     expect(
       buildUrl("http://example.com/", {
