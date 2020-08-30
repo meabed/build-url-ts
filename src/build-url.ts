@@ -1,6 +1,19 @@
 import { appendPath, buildHash, buildQueryString } from "./utils";
 
-function buildUrl(url, options = {}) {
+type IQueryParams = Record<
+  string,
+  string | number | string[] | (string | number)[]
+>;
+
+interface IUrlOptions {
+  path?: string | number;
+  lowerCase?: boolean;
+  queryParams?: IQueryParams;
+  disableCSV?: boolean;
+  hash?: string | number;
+}
+
+function buildUrl(url?: string | null | IUrlOptions, options?: IUrlOptions) {
   let builtUrl;
 
   if (url === null) {
@@ -12,11 +25,11 @@ function buildUrl(url, options = {}) {
     builtUrl = url;
   }
 
-  if (options.path) {
+  if (options?.path) {
     builtUrl = appendPath(options.path, builtUrl, options.lowerCase);
   }
 
-  if (options.queryParams) {
+  if (options?.queryParams) {
     builtUrl += buildQueryString(
       options.queryParams,
       options.lowerCase,
@@ -24,7 +37,7 @@ function buildUrl(url, options = {}) {
     );
   }
 
-  if (options.hash) {
+  if (options?.hash) {
     builtUrl += buildHash(options.hash, options.lowerCase);
   }
 

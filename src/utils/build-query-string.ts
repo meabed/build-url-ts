@@ -1,4 +1,13 @@
-function buildQueryString(queryParams, lowerCase, disableCSV) {
+type IQueryParams = Record<
+  string,
+  string | number | string[] | (string | number)[]
+>;
+
+function buildQueryString(
+  queryParams: IQueryParams,
+  lowerCase?: boolean,
+  disableCSV?: boolean
+) {
   const queryString = [];
 
   for (let key in queryParams) {
@@ -11,9 +20,9 @@ function buildQueryString(queryParams, lowerCase, disableCSV) {
       if (
         disableCSV &&
         Array.isArray(queryParams[key]) &&
-        queryParams[key].length
+        (queryParams[key] as []).length
       ) {
-        for (let i = 0; i < queryParams[key].length; i++) {
+        for (let i = 0; i < (queryParams[key] as []).length; i++) {
           param = queryParams[key][i] || "";
           queryString.push(
             `${key}=${encodeURIComponent(String(param).trim())}`
@@ -21,7 +30,7 @@ function buildQueryString(queryParams, lowerCase, disableCSV) {
         }
       } else {
         if (lowerCase) {
-          param = queryParams[key].toLowerCase() || "";
+          param = String(queryParams[key]).toLowerCase() || "";
         } else {
           param = queryParams[key] || "";
         }

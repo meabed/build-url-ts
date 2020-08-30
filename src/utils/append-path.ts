@@ -1,4 +1,8 @@
-function appendPath(path, builtUrl, lowerCase) {
+function appendPath(
+  path: string | number,
+  builtUrl: string,
+  lowerCase?: boolean
+) {
   if (builtUrl[builtUrl.length - 1] === "/") {
     builtUrl = builtUrl.slice(0, -1);
   }
