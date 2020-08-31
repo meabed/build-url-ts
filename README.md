@@ -14,8 +14,40 @@ npm install build-url --save
 
 ## Usage
 
+Usage in the browser:
+
+```
+<script src="../path/to/lib/build-url.js"></script>
+<script>
+buildUrl('http://example.com', {
+  path: 'about',
+  hash: 'contact',
+  queryParams: {
+    foo: bar,
+    bar: ['foo', 'bar']
+  }
+});
+</script>
+```
+
+Usage with ES6 modules:
 ```
 import buildUrl from '../path/to/lib/build-url';
+
+buildUrl('http://example.com', {
+  path: 'about',
+  hash: 'contact',
+  queryParams: {
+    foo: bar,
+    bar: ['foo', 'bar']
+  }
+});
+```
+
+Usage with node:
+
+```
+var buildUrl = require('build-url');
 
 buildUrl('http://example.com', {
   path: 'about',
@@ -57,7 +89,7 @@ buildUrl('http://example.com', {
 // returns http://example.com?foo=bar&bar=one,two,three
 ```
 
-If you want to change the `path`, `hash` and `queryParams` case to all lowercase then pass `lowerCase` as true in arguments, default value of this will be `false`:
+If you want to change the `path`, `hash` and `queryParams` case to all lowercase  then pass `lowerCase` as true in arguments, default value of this will be `false`:
 
 ```
 buildUrl('http://example.com', {
@@ -86,6 +118,7 @@ buildUrl('http://example.com', {
 
 // returns http://example.com?foo=bar&bar=one&bar=two&bar=three
 ```
+
 
 If you only want the query string, path, hash, or any combination of the three you can skip the URL parameter or pass in an empty string or null:
 
