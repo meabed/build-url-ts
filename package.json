@@ -5,10 +5,8 @@
   "main": "./dist/build-url.js",
   "types": "./build-url.d.ts",
   "scripts": {
-    "build": "gulp",
-    "prepublishOnly": "gulp",
     "test": "jest",
-    "test-watch": "jest --watch"
+    "prepublishOnly": "gulp"
   },
   "repository": {
     "type": "git",
