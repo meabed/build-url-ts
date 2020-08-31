@@ -4,7 +4,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   entry: {
-    "build-url": "./src/build-url.js",
+    bulidUrl: "./src/build-url.js",
   },
   output: {
     filename: "[name].js",
