@@ -1,11 +1,11 @@
 {
   "name": "build-url",
-  "version": "3.0.1",
+  "version": "3.0.0",
   "description": "A small library that builds a URL given its components",
   "main": "./dist/build-url.js",
   "types": "./build-url.d.ts",
   "scripts": {
-    "test": "jest"
+    "test": "./node_modules/jasmine/bin/jasmine.js"
   },
   "repository": {
     "type": "git",
@@ -39,7 +39,7 @@
     "gulp-header": "2.0.5",
     "gulp-rename": "1.4.0",
     "gulp-uglify": "3.0.1",
-    "jest": "26.4.2",
+    "jasmine": "3.3.0",
     "pump": "3.0.0"
   }
 }
