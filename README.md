@@ -1,10 +1,12 @@
-# build-url-ts
+# build-url-ts ( Typescript )
 
 [![Build Status](https://travis-ci.org/meabed/build-url.svg?branch=master)](https://travis-ci.org/meabed/build-url)
 
 A library that builds a URL, including its path, query parameters and fragment identifier. Works in node and in the browser.
 
 > This is a fork from https://github.com/steverydz/build-url to add typescript support for the library
+
+> CodeSandBox Demo: https://codesandbox.io/s/build-url-ts-demo-qer8y
 
 ## Installation
 

@@ -15,8 +15,13 @@
     "stripInternal": true,
     "declaration": true,
     "declarationMap": true,
+    "declarationDir": "./dist",
     "outDir": "dist",
     "resolveJsonModule": true,
-    "importHelpers": true
-  }
+    "importHelpers": true,
+    "rootDir": "./src"
+  },
+  "exclude": [
+    "./src/__tests__"
+  ]
 }

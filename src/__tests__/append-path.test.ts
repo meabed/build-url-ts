@@ -1,4 +1,4 @@
-import appendPath from "../src/utils/append-path";
+import {appendPath} from "../build-url";
 
 describe("appendPath", () => {
   it("should append path", () => {});
