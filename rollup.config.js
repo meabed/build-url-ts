@@ -26,7 +26,8 @@ export default {
     }),
     commonjs(), //translate commonjs module to ES6 module to be handle from Rollup and tree-shake
     replace({ //enable find-replacing variable in JS code to use ENV varibale for conditional code
-      ENV: JSON.stringify(process.env.NODE_ENV || "development") // key = var name, value = replace
+      ENV: JSON.stringify(process.env.NODE_ENV || "development"),// key = var name, value = replace
+      preventAssignment: true
     }),
     (process.env.NODE_ENV === "production" && uglify())
   ]

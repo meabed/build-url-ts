@@ -1,5 +1,7 @@
-export type IQueryParams = Record<string,
-  null | undefined | string | number | string[] | (string | number)[]>;
+export type IQueryParams = Record<
+  string,
+  null | undefined | string | number | string[] | (string | number)[]
+>;
 
 export function buildQueryString(
   queryParams: IQueryParams,
@@ -40,7 +42,6 @@ export function buildQueryString(
 
   return `?${queryString.join("&")}`;
 }
-
 
 export function appendPath(
   path: string | number,
