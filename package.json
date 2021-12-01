@@ -58,7 +58,7 @@
     "@typescript-eslint/parser": "5.5.0",
     "eslint": "8.3.0",
     "eslint-config-prettier": "8.3.0",
-    "jest": "27.4.2",
+    "jest": "27.4.3",
     "prettier": "2.5.0",
     "rollup": "2.60.2",
     "rollup-plugin-uglify": "^6.0.4",
