@@ -1,6 +1,6 @@
 # build-url-ts ( Typescript )
-
-[![Build Status](https://travis-ci.org/meabed/build-url.svg?branch=master)](https://travis-ci.org/meabed/build-url)
+[![Build Status](https://github.com/meabed/build-url-ts/actions/workflows/ci.yml/badge.svg)](https://github.com/meabed/build-url-ts/actions/workflows/ci.yml)
+[![NPM version](https://img.shields.io/npm/v/build-url-ts.svg)](https://www.npmjs.com/package/build-url-ts)
 
 A library that builds a URL, including its path, query parameters and fragment identifier. Works in node and in the browser.
 
@@ -19,7 +19,7 @@ npm install build-url-ts --save
 ## Usage
 
 ```
-import buildUrl from 'build-url-ts';
+import { buildUrl } from 'build-url-ts';
 
 buildUrl('http://example.com', {
   path: 'about',

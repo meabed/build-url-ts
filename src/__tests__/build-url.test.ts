@@ -1,4 +1,4 @@
-import buildUrl from "../build-url";
+import { buildUrl } from "../build-url";
 
 describe("buildUrl", () => {
   it("should be defined", () => {
@@ -6,7 +6,7 @@ describe("buildUrl", () => {
   });
 
   it("should return undefined if called with no arguments", () => {
-    expect(buildUrl()).toBe(undefined);
+    expect(typeof buildUrl()).toBe("undefined");
   });
 
   it("should return a string if called with an argument", () => {
