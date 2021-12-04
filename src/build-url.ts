@@ -1,5 +1,7 @@
-export type IQueryParams = Record<string,
-  null | undefined | string | number | string[] | (string | number)[]>;
+export type IQueryParams = Record<
+  string,
+  null | undefined | string | number | string[] | (string | number)[]
+>;
 
 export function buildQueryString(
   queryParams: IQueryParams,
@@ -78,7 +80,10 @@ interface IUrlOptions {
   hash?: string | number;
 }
 
-function buildUrl(url?: string | null | IUrlOptions, options?: IUrlOptions): string {
+function buildUrl(
+  url?: string | null | IUrlOptions,
+  options?: IUrlOptions
+): string {
   let builtUrl;
 
   if (url === null) {

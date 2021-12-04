@@ -9,7 +9,6 @@ on:
       - 'yarn.lock'
     branches:
       - '*'
-      - '!master'
 
 env:
   CI: true

@@ -2,21 +2,6 @@
   "name": "build-url-ts",
   "version": "6.1.3",
   "description": "A small library that builds a URL given its components",
-  "main": "./dist/build-url.js",
-  "types": "./dist/build-url.d.ts",
-  "scripts": {
-    "build": "rollup -c ./rollup.config.js",
-    "build:prod": "NODE_ENV=production rollup -c ./rollup.config.js",
-    "lint-js": "eslint src/**/*.ts",
-    "prepublishOnly": "rm -rf dist/* && NODE_ENV=production rollup -c ./rollup.config.js",
-    "test": "jest",
-    "test-watch": "jest --watch",
-    "prettier": "prettier --write '**/*.{ts,tsx,css,scss}'"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/meabed/build-url.git"
-  },
   "keywords": [
     "url",
     "uri",
@@ -34,17 +19,32 @@
     "params",
     "queryparams"
   ],
-  "author": "Steve Rydz",
+  "homepage": "https://github.com/meabed/build-url-ts#readme",
+  "bugs": {
+    "url": "https://github.com/meabed/build-url-ts/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meabed/build-url-ts.git"
+  },
+  "license": "MIT",
+  "author": "Mohamed Meabed",
   "maintainers": [
     {
       "name": "Mohamed Meabed"
     }
   ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/meabed/build-url/issues"
+  "main": "./dist/build-url.js",
+  "types": "./dist/build-url.d.ts",
+  "scripts": {
+    "build": "rollup -c ./rollup.config.js",
+    "build:prod": "NODE_ENV=production rollup -c ./rollup.config.js",
+    "lint-js": "eslint src/**/*.ts",
+    "prepublishOnly": "rm -rf dist/* && NODE_ENV=production rollup -c ./rollup.config.js",
+    "prettier": "prettier --write '**/*.{ts,tsx,css,scss}'",
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
-  "homepage": "https://github.com/meabed/build-url#readme",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",
