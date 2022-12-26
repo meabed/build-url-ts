@@ -48,6 +48,10 @@ export function appendPath(
   builtUrl: string,
   lowerCase?: boolean
 ) {
+  if (typeof builtUrl === "undefined") {
+    builtUrl = "";
+  }
+
   if (builtUrl[builtUrl.length - 1] === "/") {
     builtUrl = builtUrl.slice(0, -1);
   }

@@ -5,8 +5,7 @@ on:
   push:
     paths:
       - 'src/**'
-      - 'test/**'
-      - 'typings/**'
+      - '__tests__/**'
       - 'package.json'
       - 'yarn.lock'
       - 'release.config.js'
