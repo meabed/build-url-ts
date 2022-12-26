@@ -8,7 +8,7 @@ A library that builds a URL, including its path, query parameters and fragment i
 
 > This is a fork from https://github.com/steverydz/build-url to add typescript support for the library
 
-> CodeSandBox Demo: https://codesandbox.io/s/build-url-ts-demo-qer8y
+[![Edit build-url-ts-demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/build-url-ts-demo-qer8y?fontsize=14&hidenavigation=1&theme=dark)
 
 ## Installation
 
