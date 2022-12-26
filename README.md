@@ -1,6 +1,8 @@
 # build-url-ts ( Typescript )
 [![Build Status](https://github.com/meabed/build-url-ts/actions/workflows/ci.yml/badge.svg)](https://github.com/meabed/build-url-ts/actions/workflows/ci.yml)
 [![NPM version](https://img.shields.io/npm/v/build-url-ts.svg)](https://www.npmjs.com/package/build-url-ts)
+[![Downloads](https://img.shields.io/npm/dm/build-url-ts.svg)](https://www.npmjs.com/package/build-url-ts)
+[![UNPKG](https://img.shields.io/badge/UNPKG-OK-179BD7.svg)](https://unpkg.com/browse/build-url-ts@latest/)
 
 A library that builds a URL, including its path, query parameters and fragment identifier. Works in node and in the browser.
 
