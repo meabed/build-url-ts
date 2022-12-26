@@ -43,10 +43,10 @@
   "main": "./dist/build-url.js",
   "types": "./dist/build-url.d.ts",
   "scripts": {
-    "build": "rollup -c ./rollup.config.js",
-    "build:prod": "NODE_ENV=production rollup -c ./rollup.config.js",
+    "build": "rollup -c rollup.config.mjs",
+    "build:prod": "NODE_ENV=production rollup -c rollup.config.mjs",
     "lint-js": "eslint src/**/*.ts",
-    "prepublishOnly": "rm -rf dist/* && NODE_ENV=production rollup -c ./rollup.config.js",
+    "prepublishOnly": "rm -rf dist/* && NODE_ENV=production rollup -c rollup.config.mjs",
     "prettier": "prettier --write '**/*.{ts,tsx,css,scss}'",
     "test": "jest",
     "test-watch": "jest --watch"
