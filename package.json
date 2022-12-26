@@ -28,10 +28,16 @@
     "url": "git+https://github.com/meabed/build-url-ts.git"
   },
   "license": "MIT",
-  "author": "Mohamed Meabed",
+  "author": {
+    "name": "Mohamed Meabed",
+    "email": "mo@meabed.com",
+    "url": "https://meabed.com"
+  },
   "maintainers": [
     {
-      "name": "Mohamed Meabed"
+      "name": "Mohamed Meabed",
+      "email": "mo@meabed.com",
+      "url": "https://meabed.com"
     }
   ],
   "main": "./dist/build-url.js",
@@ -50,10 +56,8 @@
     "@rollup/plugin-node-resolve": "15.0.1",
     "@rollup/plugin-replace": "5.0.2",
     "@rollup/plugin-typescript": "10.0.1",
-    "@types/eslint": "8.4.10",
     "@types/jasmine": "4.3.1",
     "@types/jest": "29.2.4",
-    "@types/prettier": "2.7.2",
     "@typescript-eslint/eslint-plugin": "5.47.0",
     "@typescript-eslint/parser": "5.47.0",
     "eslint": "8.30.0",

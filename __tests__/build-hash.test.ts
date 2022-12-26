@@ -1,4 +1,4 @@
-import { buildHash } from "../build-url";
+import { buildHash } from "../src/build-url";
 
 describe("buildHash", () => {
   it("should return string with preceding #", () => {

@@ -1,4 +1,4 @@
-import { buildUrl } from "../build-url";
+import { buildUrl } from "../src/build-url";
 
 describe("buildUrl", () => {
   it("should be defined", () => {

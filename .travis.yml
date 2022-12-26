@@ -1,4 +1,0 @@
-language: node_js
-script: yarn && yarn build && yarn lint-js && yarn test
-node_js:
-  - "12"
