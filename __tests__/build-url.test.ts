@@ -389,4 +389,12 @@ describe("buildUrl", () => {
       })
     ).toEqual("http://example.com?foo=bar&bar=");
   });
+
+  it("should handle undefined url", () => {
+    expect(
+      buildUrl(undefined, {
+        path: "/api",
+      })
+    ).toEqual("/api");
+  });
 });
