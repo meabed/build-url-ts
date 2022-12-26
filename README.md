@@ -14,13 +14,13 @@ A library that builds a URL, including its path, query parameters and fragment i
 
 To install with npm:
 
-```
+```javascript
 npm install build-url-ts --save
 ```
 
 ## Usage
 
-```
+```javascript
 import { buildUrl } from 'build-url-ts';
 
 buildUrl('http://example.com', {
@@ -37,7 +37,7 @@ buildUrl('http://example.com', {
 
 The `buildUrl` function accepts two arguments. The first is a URL e.g. `http://example.com`. The second is an object where you can specify the `path`, `hash`, `lowerCase`, and an object of `queryParams`:
 
-```
+```javascript
 buildUrl('http://example.com', {
   path: 'about',
   hash: 'contact',
@@ -52,7 +52,7 @@ buildUrl('http://example.com', {
 
 If you pass an array to the `queryParams` object, it will be transformed to a comma separated list:
 
-```
+```javascript
 buildUrl('http://example.com', {
   queryParams: {
     foo: 'bar',
@@ -65,7 +65,7 @@ buildUrl('http://example.com', {
 
 If you want to change the `path`, `hash` and `queryParams` case to all lowercase then pass `lowerCase` as true in arguments, default value of this will be `false`:
 
-```
+```javascript
 buildUrl('http://example.com', {
   path: 'AbouT',
   hash: 'ConTacT',
@@ -81,7 +81,7 @@ buildUrl('http://example.com', {
 
 If you pass an array to the `queryParams` object, and want that they should not be comma separated use `disableCSV`:
 
-```
+```javascript
 buildUrl('http://example.com', {
   disableCSV: true,
   queryParams: {
@@ -95,7 +95,7 @@ buildUrl('http://example.com', {
 
 If you only want the query string, path, hash, or any combination of the three you can skip the URL parameter or pass in an empty string or null:
 
-```
+```javascript
 buildUrl('', {
   queryParams: {
     foo: 'bar',
@@ -124,7 +124,7 @@ buildUrl({
 
 Any null values in the `queryParams` object will be treated as empty strings:
 
-```
+```javascript
 buildUrl('http://example.com', {
   queryParams: {
     foo: 'bar',
