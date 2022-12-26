@@ -1,4 +1,4 @@
-import { appendPath } from "../build-url";
+import { appendPath } from "../src/build-url";
 
 describe("appendPath", () => {
   it("should append path", () => {});

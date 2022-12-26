@@ -1,5 +1,7 @@
-name: ci
+name: CI
 on:
+  workflow_dispatch:
+  workflow_call:
   push:
     paths:
       - 'src/**'
@@ -7,35 +9,42 @@ on:
       - 'typings/**'
       - 'package.json'
       - 'yarn.lock'
+      - 'release.config.js'
     branches:
       - '*'
 
 env:
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GIT_BRANCH: ${{ github.ref }}
   CI: true
 
 jobs:
-  build:
-    runs-on: ubuntu-18.04
+  CI:
+    runs-on: ubuntu-latest
     timeout-minutes: 20
 
     steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - uses: styfle/cancel-workflow-action@0.11.0
         with:
-          workflow_id: build-docker.yml
+          workflow_id: ci.yml
           access_token: ${{ github.token }}
 
       - uses: actions/checkout@v3
         with:
           fetch-depth: 30
-          persist-credentials: false
 
-      - uses: bahmutov/npm-install@v1
+      - uses: FranzDiebold/github-env-vars-action@v2
 
-      - name: Yarn install
-        uses: bahmutov/npm-install@v1
-        with:
-          install-command: yarn --frozen-lockfile --silent
+      - name: Yarn
+        run: yarn install --frozen-lockfile
 
       - name: Test
         run: |
           yarn test
+
+      - name: Release
+        run: |
+          npm i -g semantic-release @semantic-release/git @semantic-release/github
+          npx semantic-release --no-ci --debug
