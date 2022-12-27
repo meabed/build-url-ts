@@ -12,7 +12,7 @@ module.exports = {
       prerelease: false
     },
     {
-      name: `${branchPrefix}/.*`,
+      name: `${branchPrefix}/**`,
       prerelease: true,
       channel: `alpha.${slugBranch}`
     }
