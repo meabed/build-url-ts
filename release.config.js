@@ -14,7 +14,7 @@ module.exports = {
     {
       name: `${branchPrefix}/**`,
       prerelease: true,
-      channel: slugBranch
+      channel: `channel-${slugBranch}`
     }
   ],
   plugins: [
