@@ -1,6 +1,6 @@
 // https://semantic-release.gitbook.io/semantic-release/usage/configuration
 const pkg = require('./package.json');
-const branch = process.env.BRANCH || process.env.CI_REF_NAME_SLUG || '';
+const branch = process.env.BRANCH || process.env.CI_REF_NAME || '';
 const isMaster = branch === 'master' || branch === 'main';
 const releaseChannel = branch === 'develop' ? 'next' : `alpha.${branch}`;
 // semantic-release configuration
