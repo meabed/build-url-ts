@@ -14,14 +14,9 @@ module.exports = {
       prerelease: false,
     },
     {
-      name: 'develop',
-      prerelease: true,
-      channel: 'next',
-    },
-    {
       name: branch,
       prerelease: true,
-      channel: `alpha`
+      channel: 'beta',
     },
   ],
   plugins: [
