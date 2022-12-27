@@ -1,6 +1,9 @@
 // https://semantic-release.gitbook.io/semantic-release/usage/configuration
 const pkg = require('./package.json');
 const branch = process.env.BRANCH || process.env.CI_REF_NAME || '';
+const branchPrefix = branch.split('/')[0];
+const branchRange = branch.replace(`${branchPrefix}/`, '');
+
 const isMaster = branch === 'master' || branch === 'main';
 // semantic-release configuration
 module.exports = {
@@ -9,7 +12,7 @@ module.exports = {
       name: 'master',
       prerelease: false
     },
-    { name: branch, prerelease: true }
+    { name: branchPrefix, range: branchRange, prerelease: true }
   ],
   plugins: [
     [
