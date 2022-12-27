@@ -1,8 +1,9 @@
 // https://semantic-release.gitbook.io/semantic-release/usage/configuration
 const pkg = require('./package.json');
 const branch = process.env.BRANCH || process.env.CI_REF_NAME || '';
+const slugBranch = branch.replace(/\//g, '-');
 const isMaster = branch === 'master' || branch === 'main';
-const releaseChannel = branch === 'develop' ? 'next' : `alpha.${branch}`;
+const releaseChannel = branch === 'develop' ? 'next' : `alpha.${slugBranch}`;
 // semantic-release configuration
 module.exports = {
   branches: [
@@ -14,7 +15,7 @@ module.exports = {
       name: 'main',
       prerelease: false,
     },
-    { name: branch, prerelease: true, channel: releaseChannel },
+    { name: slugBranch, prerelease: true, channel: releaseChannel },
   ],
   plugins: [
     [
