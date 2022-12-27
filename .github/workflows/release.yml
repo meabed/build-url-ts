@@ -7,8 +7,7 @@ on:
       - 'src/**'
       - 'yarn.lock'
     branches:
-      - '*'
-      - '**'
+      - 'master'
 
 env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
