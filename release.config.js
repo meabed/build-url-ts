@@ -22,7 +22,7 @@ module.exports = {
     {
       name: branch,
       prerelease: true,
-      channel: `alpha.${slugBranch}`
+      channel: `alpha-${slugBranch}`
     },
   ],
   plugins: [
