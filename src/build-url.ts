@@ -1,38 +1,22 @@
-export type IQueryParams = Record<
-  string,
-  null | undefined | string | number | string[] | (string | number)[]
->;
+export type IQueryParams = Record<string, null | undefined | string | number | string[] | (string | number)[]>;
 
-export function buildQueryString(
-  queryParams: IQueryParams,
-  lowerCase?: boolean,
-  disableCSV?: boolean
-) {
+export function buildQueryString(queryParams: IQueryParams, lowerCase?: boolean, disableCSV?: boolean) {
   const queryString: string[] = [];
 
   for (let key in queryParams) {
-    if (
-      Object.prototype.hasOwnProperty.call(queryParams, key) &&
-      queryParams[key] !== void 0
-    ) {
+    if (Object.prototype.hasOwnProperty.call(queryParams, key) && queryParams[key] !== void 0) {
       let param;
 
-      if (
-        disableCSV &&
-        Array.isArray(queryParams[key]) &&
-        (queryParams[key] as []).length
-      ) {
+      if (disableCSV && Array.isArray(queryParams[key]) && (queryParams[key] as []).length) {
         (queryParams[key] as []).forEach((v) => {
-          param = v !== 0 ? v || "" : 0;
-          queryString.push(
-            `${key}=${encodeURIComponent(String(param).trim())}`
-          );
+          param = v !== 0 ? v || '' : 0;
+          queryString.push(`${key}=${encodeURIComponent(String(param).trim())}`);
         });
       } else {
         if (lowerCase) {
-          param = String(queryParams[key]).toLowerCase() || "";
+          param = String(queryParams[key]).toLowerCase() || '';
         } else {
-          param = queryParams[key] !== 0 ? queryParams[key] || "" : 0;
+          param = queryParams[key] !== 0 ? queryParams[key] || '' : 0;
         }
 
         queryString.push(`${key}=${encodeURIComponent(String(param).trim())}`);
@@ -40,19 +24,15 @@ export function buildQueryString(
     }
   }
 
-  return `?${queryString.join("&")}`;
+  return `?${queryString.join('&')}`;
 }
 
-export function appendPath(
-  path: string | number,
-  builtUrl: string,
-  lowerCase?: boolean
-) {
-  if (typeof builtUrl === "undefined") {
-    builtUrl = "";
+export function appendPath(path: string | number, builtUrl: string, lowerCase?: boolean) {
+  if (typeof builtUrl === 'undefined') {
+    builtUrl = '';
   }
 
-  if (builtUrl[builtUrl.length - 1] === "/") {
+  if (builtUrl[builtUrl.length - 1] === '/') {
     builtUrl = builtUrl.slice(0, -1);
   }
 
@@ -62,7 +42,7 @@ export function appendPath(
     pathString = pathString.toLowerCase();
   }
 
-  if (pathString.indexOf("/") === 0) {
+  if (pathString.indexOf('/') === 0) {
     builtUrl += pathString;
   } else {
     builtUrl += `/${pathString}`;
@@ -84,16 +64,13 @@ interface IUrlOptions {
   hash?: string | number;
 }
 
-function buildUrl(
-  url?: string | null | IUrlOptions,
-  options?: IUrlOptions
-): string {
+function buildUrl(url?: string | null | IUrlOptions, options?: IUrlOptions): string {
   let builtUrl;
 
   if (url === null) {
-    builtUrl = "";
-  } else if (typeof url === "object") {
-    builtUrl = "";
+    builtUrl = '';
+  } else if (typeof url === 'object') {
+    builtUrl = '';
     options = url;
   } else {
     builtUrl = url;
@@ -104,11 +81,7 @@ function buildUrl(
   }
 
   if (options?.queryParams) {
-    builtUrl += buildQueryString(
-      options.queryParams,
-      options.lowerCase,
-      options.disableCSV
-    );
+    builtUrl += buildQueryString(options.queryParams, options.lowerCase, options.disableCSV);
   }
 
   if (options?.hash) {
