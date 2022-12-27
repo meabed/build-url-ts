@@ -12,7 +12,6 @@ module.exports = {
     {
       name: branch,
       prerelease: true,
-      channel: `alpha.${branch}`,
     },
   ],
   plugins: [
