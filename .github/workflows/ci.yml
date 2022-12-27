@@ -44,7 +44,16 @@ jobs:
         run: |
           yarn test
 
-      - name: Release
+      - name: Release Prep
         run: |
           npm i -g semantic-release @semantic-release/git @semantic-release/github conventional-changelog-conventionalcommits
+
+      - name: Release Dry Run
+        if: github.ref != 'refs/heads/master'
+        run: |
           npx semantic-release --no-ci --debug --dry-run
+
+      - name: Release Run
+        if: github.ref == 'refs/heads/master'
+        run: |
+          npx semantic-release --no-ci --debug
