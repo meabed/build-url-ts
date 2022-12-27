@@ -2,6 +2,7 @@
 const pkg = require('./package.json');
 const branch = process.env.BRANCH || process.env.CI_REF_NAME_SLUG || '';
 const isMaster = branch === 'master' || branch === 'main';
+const releaseChannel = branch === 'develop' ? 'next' : `alpha.${branch}`;
 // semantic-release configuration
 module.exports = {
   branches: [
@@ -9,7 +10,11 @@ module.exports = {
       name: 'master',
       prerelease: false,
     },
-    { name: branch, prerelease: true },
+    {
+      name: 'main',
+      prerelease: false,
+    },
+    { name: releaseChannel, prerelease: true },
   ],
   plugins: [
     [
