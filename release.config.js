@@ -12,8 +12,12 @@ module.exports = {
       prerelease: false
     },
     {
-      name: branchPrefix,
+      name: 'develop',
       prerelease: true,
+      channel: 'next'
+    },
+    {
+      name: branchPrefix,
       channel: slugBranch
     },
     {
