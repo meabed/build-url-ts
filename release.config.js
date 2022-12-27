@@ -1,7 +1,6 @@
 // https://semantic-release.gitbook.io/semantic-release/usage/configuration
 const pkg = require('./package.json');
 const branch = process.env.BRANCH || process.env.CI_REF_NAME || '';
-const slugBranch = branch.replace(/\//g, '-');
 const isMaster = branch === 'master' || branch === 'main';
 // semantic-release configuration
 module.exports = {
@@ -22,7 +21,7 @@ module.exports = {
     {
       name: branch,
       prerelease: true,
-      channel: `alpha-${slugBranch}`
+      channel: `alpha`
     },
   ],
   plugins: [
