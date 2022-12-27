@@ -14,7 +14,7 @@ module.exports = {
       name: 'main',
       prerelease: false,
     },
-    { name: releaseChannel, prerelease: true },
+    { name: branch, prerelease: true, channel: releaseChannel },
   ],
   plugins: [
     [
