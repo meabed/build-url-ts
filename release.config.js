@@ -1,8 +1,6 @@
 // https://semantic-release.gitbook.io/semantic-release/usage/configuration
 const pkg = require('./package.json');
 const branch = process.env.BRANCH || process.env.CI_REF_NAME || '';
-const branchPrefix = branch.split('/')[0];
-const slugBranch = branch.replace(/\//g, '-');
 const isMaster = branch === 'master' || branch === 'main';
 // semantic-release configuration
 module.exports = {
@@ -11,11 +9,7 @@ module.exports = {
       name: 'master',
       prerelease: false
     },
-    {
-      name: `${branchPrefix}/**`,
-      prerelease: true,
-      channel: `channel-${slugBranch}`
-    }
+    { name: branch, prerelease: true }
   ],
   plugins: [
     [
@@ -23,18 +17,18 @@ module.exports = {
       {
         preset: 'angular',
         releaseRules: [
-          {type: 'breaking', release: 'major'},
-          {type: 'feat', release: 'minor'},
-          {type: 'fix', release: 'patch'},
-          {type: 'revert', release: 'patch'},
-          {type: 'docs', release: 'patch'},
-          {type: 'refactor', release: 'patch'},
-          {type: 'style', release: 'patch'},
-          {type: 'test', release: 'patch'},
-          {type: 'chore', release: 'patch'},
-          {type: 'ci', release: 'patch'},
-          {type: 'perf', release: 'patch'},
-          {type: 'build', release: 'patch'},
+          { type: 'breaking', release: 'major' },
+          { type: 'feat', release: 'minor' },
+          { type: 'fix', release: 'patch' },
+          { type: 'revert', release: 'patch' },
+          { type: 'docs', release: 'patch' },
+          { type: 'refactor', release: 'patch' },
+          { type: 'style', release: 'patch' },
+          { type: 'test', release: 'patch' },
+          { type: 'chore', release: 'patch' },
+          { type: 'ci', release: 'patch' },
+          { type: 'perf', release: 'patch' },
+          { type: 'build', release: 'patch' }
         ]
       }
     ],
