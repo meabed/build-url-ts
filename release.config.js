@@ -19,7 +19,11 @@ module.exports = {
       prerelease: true,
       channel: 'next',
     },
-    { name: branch, channel: `alpha.${slugBranch}` },
+    {
+      name: branch,
+      prerelease: true,
+      channel: `alpha.${slugBranch}`
+    },
   ],
   plugins: [
     [
