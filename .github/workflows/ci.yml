@@ -11,6 +11,8 @@ on:
       - 'release.config.js'
     branches:
       - '*'
+      - '**'
+      - '!master'
 
 env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
