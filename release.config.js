@@ -12,7 +12,7 @@ module.exports = {
       name: 'master',
       prerelease: false
     },
-    { name: branchPrefix, range: branchRange, prerelease: true }
+    { name: `${branchPrefix}/**`, range: branchRange, prerelease: true }
   ],
   plugins: [
     [
