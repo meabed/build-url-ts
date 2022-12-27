@@ -12,16 +12,8 @@ module.exports = {
       prerelease: false
     },
     {
-      name: 'develop',
-      prerelease: true,
-      channel: 'next'
-    },
-    {
-      name: branchPrefix,
-      channel: slugBranch
-    },
-    {
       name: `${branchPrefix}/**`,
+      prerelease: true,
       channel: slugBranch
     }
   ],
