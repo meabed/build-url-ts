@@ -1,4 +1,4 @@
-import { buildQueryString } from '../src/build-url';
+import { buildQueryString } from '../src';
 
 describe('buildQueryString', () => {
   it('should return a query string', () => {

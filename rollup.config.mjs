@@ -6,12 +6,12 @@ import replace from "@rollup/plugin-replace";
 import resolve from "@rollup/plugin-node-resolve";
 
 export default {
-  input: './src/build-url.ts',
+  input: './src/index.ts',
   output: {
     sourcemap: true,
     dir: 'dist',
-    name: 'build-url',
-    format: 'cjs',
+    name: 'buildUrl',
+    format: 'umd',
     exports: 'named',
   },
   plugins: [
