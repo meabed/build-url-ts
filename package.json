@@ -55,7 +55,7 @@
     "test-watch": "jest --watch"
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "4.0.1",
+    "@ianvs/prettier-plugin-sort-imports": "4.0.2",
     "@rollup/plugin-commonjs": "25.0.0",
     "@rollup/plugin-node-resolve": "15.1.0",
     "@rollup/plugin-replace": "5.0.2",
@@ -72,6 +72,6 @@
     "rollup-plugin-uglify": "6.0.4",
     "ts-jest": "29.1.0",
     "tslib": "2.5.2",
-    "typescript": "5.0.4"
+    "typescript": "5.1.3"
   }
 }
