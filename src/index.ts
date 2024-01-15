@@ -1,26 +1,27 @@
 export type IQueryParams = Record<string, null | undefined | string | number | string[] | (string | number)[]>;
-export enum IDisableCsvType { SIMPLE = 1, ARRAY, ORDER_ASC, ORDER_DESC }
+
+export type IDisableCsvType = 'array' | 'order_asc' | 'order_desc';
 
 export function buildQueryString(queryParams: IQueryParams, lowerCase?: boolean, disableCSV?: boolean | IDisableCsvType) {
   const queryString: string[] = [];
 
   for (const key in queryParams) {
     if (Object.prototype.hasOwnProperty.call(queryParams, key) && queryParams[key] !== void 0) {
-      let param;
+      let param: string | number | (string | number)[];
 
       if (Array.isArray(queryParams[key]) && (queryParams[key] as []).length) {
         if (disableCSV) {
-          let i = (disableCSV as IDisableCsvType) === IDisableCsvType.ORDER_DESC ? (queryParams[key] as []).length - 1 : 0;
+          let i = (disableCSV as IDisableCsvType) === 'order_desc' ? (queryParams[key] as []).length - 1 : 0;
           (queryParams[key] as []).forEach((v) => {
             param = v !== 0 ? v || '' : 0;
             switch (disableCSV as IDisableCsvType) {
-              case IDisableCsvType.ARRAY:
+              case 'array':
                 queryString.push(`${key}[]=${encodeURIComponent(String(param).trim())}`);
                 break;
-              case IDisableCsvType.ORDER_ASC:
+              case 'order_asc':
                 queryString.push(`${key}[${i++}]=${encodeURIComponent(String(param).trim())}`);
                 break;
-              case IDisableCsvType.ORDER_DESC:
+              case 'order_desc':
                 queryString.push(`${key}[${i--}]=${encodeURIComponent(String(param).trim())}`);
                 break;
               default:
@@ -34,7 +35,7 @@ export function buildQueryString(queryParams: IQueryParams, lowerCase?: boolean,
             return encodeURIComponent(String(value).trim());
           });
 
-          queryString.push(`${key}=${String(param)}`);
+          queryString.push(`${key}=${encodeURIComponent(String(param).trim())}`);
         }
       } else {
         if (lowerCase) {
@@ -88,8 +89,8 @@ interface IUrlOptions {
   hash?: string | number;
 }
 
-function buildUrl(url?: string | null | IUrlOptions, options?: IUrlOptions): string {
-  let builtUrl;
+function buildUrl(url?: string | null | IUrlOptions, options?: IUrlOptions) {
+  let builtUrl: string | undefined;
 
   if (url === null) {
     builtUrl = '';
