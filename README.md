@@ -93,6 +93,19 @@ index('http://example.com', {
 // returns http://example.com?foo=bar&bar=one&bar=two&bar=three
 ```
 
+if you need the array as an array in the query string, you can pass `disableCSV` as one of this values `'array' | 'order_asc' | 'order_desc'`:
+```javascript
+index('http://example.com', {
+    disableCSV: 'array',
+    queryParams: {
+        foo: 'bar',
+        bar: ['one', 'two', 'three']
+    }
+});
+
+// returns http://example.com?foo=bar&bar[]=one&bar[]=two&bar[]=three
+```
+
 If you only want the query string, path, hash, or any combination of the three you can skip the URL parameter or pass in an empty string or null:
 
 ```javascript
