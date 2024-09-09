@@ -5,8 +5,8 @@ describe('buildUrl', () => {
     expect(buildUrl).toBeDefined();
   });
 
-  it('should return undefined if called with no arguments', () => {
-    expect(typeof buildUrl()).toBe('undefined');
+  it('should return empty string if called with no arguments', () => {
+    expect(buildUrl()).toBe('');
   });
 
   it('should return a string if called with an argument', () => {
