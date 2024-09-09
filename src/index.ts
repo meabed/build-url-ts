@@ -2,7 +2,11 @@ export type IQueryParams = Record<string, null | undefined | string | number | s
 
 export type IDisableCsvType = 'array' | 'order_asc' | 'order_desc';
 
-export function buildQueryString(queryParams: IQueryParams, lowerCase?: boolean, disableCSV?: boolean | IDisableCsvType) {
+export function buildQueryString(
+  queryParams: IQueryParams,
+  lowerCase?: boolean,
+  disableCSV?: boolean | IDisableCsvType
+) {
   const queryString: string[] = [];
 
   for (const key in queryParams) {
@@ -90,7 +94,7 @@ interface IUrlOptions {
 }
 
 function buildUrl(url?: string | null | IUrlOptions, options?: IUrlOptions) {
-  let builtUrl: string | undefined;
+  let builtUrl: string;
 
   if (url === null) {
     builtUrl = '';
@@ -98,7 +102,7 @@ function buildUrl(url?: string | null | IUrlOptions, options?: IUrlOptions) {
     builtUrl = '';
     options = url;
   } else {
-    builtUrl = url;
+    builtUrl = url || '';
   }
 
   if (options?.path) {
