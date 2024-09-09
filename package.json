@@ -1,6 +1,6 @@
 {
   "name": "build-url-ts",
-  "version": "6.1.7",
+  "version": "6.1.8",
   "description": "A small library that builds a URL given its components",
   "keywords": [
     "url",
