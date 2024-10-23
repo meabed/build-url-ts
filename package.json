@@ -61,7 +61,7 @@
     "@rollup/plugin-replace": "6.0.1",
     "@rollup/plugin-typescript": "12.1.1",
     "@types/jasmine": "5.1.4",
-    "@types/jest": "29.5.13",
+    "@types/jest": "29.5.14",
     "typescript-eslint": "8.11.0",
     "eslint": "9.13.0",
     "eslint-config-prettier": "9.1.0",
