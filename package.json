@@ -62,7 +62,7 @@
     "@rollup/plugin-typescript": "12.1.4",
     "@types/jasmine": "5.1.8",
     "@types/jest": "30.0.0",
-    "typescript-eslint": "8.36.0",
+    "typescript-eslint": "8.37.0",
     "eslint": "9.31.0",
     "eslint-config-prettier": "10.1.5",
     "jest": "30.0.4",
