@@ -67,7 +67,7 @@
     "eslint-config-prettier": "10.1.8",
     "jest": "30.0.5",
     "prettier": "3.6.2",
-    "rollup": "4.45.1",
+    "rollup": "4.45.3",
     "rollup-plugin-uglify": "6.0.4",
     "ts-jest": "29.4.0",
     "tslib": "2.8.1",
