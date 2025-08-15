@@ -60,7 +60,7 @@
     "@rollup/plugin-node-resolve": "16.0.1",
     "@rollup/plugin-replace": "6.0.2",
     "@rollup/plugin-typescript": "12.1.4",
-    "@types/jasmine": "5.1.8",
+    "@types/jasmine": "5.1.9",
     "@types/jest": "30.0.0",
     "typescript-eslint": "8.39.1",
     "eslint": "9.33.0",
