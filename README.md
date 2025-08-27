@@ -364,13 +364,6 @@ import { buildUrl } from 'build-url-ts';
 
 The API remains fully compatible, so you can simply replace the import.
 
-## Browser Support
-
-- Chrome/Edge: Latest 2 versions
-- Firefox: Latest 2 versions
-- Safari: Latest 2 versions
-- Node.js: 14+
-
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -399,7 +392,7 @@ npm run lint
 
 ## License
 
-MIT © [Mohamed Meabed](https://github.com/meabed)
+This is licensed under MIT License. [See details](LICENSE)
 
 ## Acknowledgments
 
