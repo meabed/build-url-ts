@@ -1,91 +1,9 @@
-export type IQueryParams = Record<string, null | undefined | string | number | string[] | (string | number)[]>;
+export type QueryParamValue = null | undefined | string | number | boolean | (string | number | boolean)[];
+export type IQueryParams = Record<string, QueryParamValue>;
 
 export type IDisableCsvType = 'array' | 'order_asc' | 'order_desc';
 
-export function buildQueryString(
-  queryParams: IQueryParams,
-  lowerCase?: boolean,
-  disableCSV?: boolean | IDisableCsvType
-) {
-  const queryString: string[] = [];
-
-  for (const key in queryParams) {
-    if (Object.prototype.hasOwnProperty.call(queryParams, key) && queryParams[key] !== void 0) {
-      let param: string | number | (string | number)[];
-
-      if (Array.isArray(queryParams[key]) && (queryParams[key] as []).length) {
-        if (disableCSV) {
-          let i = (disableCSV as IDisableCsvType) === 'order_desc' ? (queryParams[key] as []).length - 1 : 0;
-          (queryParams[key] as []).forEach((v) => {
-            param = v !== 0 ? v || '' : 0;
-            switch (disableCSV as IDisableCsvType) {
-              case 'array':
-                queryString.push(`${key}[]=${encodeURIComponent(String(param).trim())}`);
-                break;
-              case 'order_asc':
-                queryString.push(`${key}[${i++}]=${encodeURIComponent(String(param).trim())}`);
-                break;
-              case 'order_desc':
-                queryString.push(`${key}[${i--}]=${encodeURIComponent(String(param).trim())}`);
-                break;
-              default:
-                queryString.push(`${key}=${encodeURIComponent(String(param).trim())}`);
-                break;
-            }
-          });
-        } else {
-          param = (queryParams[key] as []).map((v) => {
-            const value = v !== 0 ? v || '' : 0;
-            return encodeURIComponent(String(value).trim());
-          });
-
-          queryString.push(`${key}=${encodeURIComponent(String(param).trim())}`);
-        }
-      } else {
-        if (lowerCase) {
-          param = String(queryParams[key]).toLowerCase() || '';
-        } else {
-          param = queryParams[key] !== 0 ? queryParams[key] || '' : 0;
-        }
-
-        queryString.push(`${key}=${encodeURIComponent(String(param).trim())}`);
-      }
-    }
-  }
-
-  return `?${queryString.join('&')}`;
-}
-
-export function appendPath(path: string | number, builtUrl: string, lowerCase?: boolean) {
-  if (typeof builtUrl === 'undefined') {
-    builtUrl = '';
-  }
-
-  if (builtUrl[builtUrl.length - 1] === '/') {
-    builtUrl = builtUrl.slice(0, -1);
-  }
-
-  let pathString = String(path).trim();
-
-  if (lowerCase) {
-    pathString = pathString.toLowerCase();
-  }
-
-  if (pathString.indexOf('/') === 0) {
-    builtUrl += pathString;
-  } else {
-    builtUrl += `/${pathString}`;
-  }
-
-  return builtUrl;
-}
-
-export function buildHash(hash: string | number, lowerCase?: boolean): string {
-  const hashString = `#${String(hash).trim()}`;
-  return lowerCase ? hashString.toLowerCase() : hashString;
-}
-
-interface IUrlOptions {
+export interface IBuildUrlOptions {
   path?: string | number;
   lowerCase?: boolean;
   queryParams?: IQueryParams;
@@ -93,31 +11,144 @@ interface IUrlOptions {
   hash?: string | number;
 }
 
-function buildUrl(url?: string | null | IUrlOptions, options?: IUrlOptions) {
-  let builtUrl: string;
+/**
+ * Builds a query string from parameters
+ */
+export function buildQueryString(
+  queryParams: IQueryParams,
+  lowerCase?: boolean,
+  disableCSV?: boolean | IDisableCsvType
+): string {
+  const queryParts: string[] = [];
+  const entries = Object.entries(queryParams);
 
-  if (url === null) {
-    builtUrl = '';
+  for (const [key, value] of entries) {
+    if (value === undefined) continue;
+
+    if (Array.isArray(value) && value.length > 0) {
+      if (disableCSV) {
+        const arrayLength = value.length;
+        let index = disableCSV === 'order_desc' ? arrayLength - 1 : 0;
+        
+        for (const item of value) {
+          const encodedValue = encodeURIComponent(formatValue(item, lowerCase));
+          
+          switch (disableCSV) {
+            case 'array':
+              queryParts.push(`${key}[]=${encodedValue}`);
+              break;
+            case 'order_asc':
+              queryParts.push(`${key}[${index++}]=${encodedValue}`);
+              break;
+            case 'order_desc':
+              queryParts.push(`${key}[${index--}]=${encodedValue}`);
+              break;
+            default:
+              queryParts.push(`${key}=${encodedValue}`);
+              break;
+          }
+        }
+      } else {
+        const csvValue = value
+          .map((item) => formatValue(item, lowerCase))
+          .join(',');
+        queryParts.push(`${key}=${encodeURIComponent(csvValue)}`);
+      }
+    } else {
+      const encodedValue = encodeURIComponent(formatValue(value, lowerCase));
+      queryParts.push(`${key}=${encodedValue}`);
+    }
+  }
+
+  return queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
+}
+
+/**
+ * Formats a single value for use in query string
+ */
+function formatValue(value: QueryParamValue, lowerCase?: boolean): string {
+  if (value === null) return '';
+  if (value === undefined) return '';
+  if (typeof value === 'boolean') return value.toString();
+  if (value === 0) return '0';
+  if (!value) return '';
+  
+  const stringValue = String(value).trim();
+  return lowerCase ? stringValue.toLowerCase() : stringValue;
+}
+
+/**
+ * Appends a path segment to a URL
+ */
+export function appendPath(path: string | number, builtUrl: string, lowerCase?: boolean): string {
+  const url = builtUrl ?? '';
+  const trimmedPath = String(path).trim();
+  const pathString = lowerCase ? trimmedPath.toLowerCase() : trimmedPath;
+  
+  // Handle empty path
+  if (!pathString) return url;
+  
+  // Remove trailing slash from URL if present
+  const baseUrl = url.endsWith('/') ? url.slice(0, -1) : url;
+  
+  // Add path with proper slash handling
+  return pathString.startsWith('/') ? `${baseUrl}${pathString}` : `${baseUrl}/${pathString}`;
+}
+
+/**
+ * Builds a hash fragment for a URL
+ */
+export function buildHash(hash: string | number, lowerCase?: boolean): string {
+  const trimmedHash = String(hash).trim();
+  if (!trimmedHash) return '';
+  
+  const hashString = `#${trimmedHash}`;
+  return lowerCase ? hashString.toLowerCase() : hashString;
+}
+
+/**
+ * Builds a complete URL from components
+ * @param url - Base URL or options object
+ * @param options - URL building options
+ * @returns The constructed URL string
+ */
+function buildUrl(url?: string | null | IBuildUrlOptions, options?: IBuildUrlOptions): string {
+  let baseUrl: string;
+  let buildOptions: IBuildUrlOptions | undefined;
+
+  // Handle different input patterns
+  if (url === null || url === undefined) {
+    baseUrl = '';
+    buildOptions = options;
   } else if (typeof url === 'object') {
-    builtUrl = '';
-    options = url;
+    baseUrl = '';
+    buildOptions = url;
   } else {
-    builtUrl = url || '';
+    baseUrl = url;
+    buildOptions = options;
   }
 
-  if (options?.path) {
-    builtUrl = appendPath(options.path, builtUrl as string, options.lowerCase);
+  // Apply transformations in order
+  let result = baseUrl;
+
+  if (buildOptions?.path) {
+    result = appendPath(buildOptions.path, result, buildOptions.lowerCase);
   }
 
-  if (options?.queryParams) {
-    builtUrl += buildQueryString(options.queryParams, options.lowerCase, options.disableCSV);
+  if (buildOptions?.queryParams && Object.keys(buildOptions.queryParams).length > 0) {
+    const queryString = buildQueryString(
+      buildOptions.queryParams,
+      buildOptions.lowerCase,
+      buildOptions.disableCSV
+    );
+    result += queryString;
   }
 
-  if (options?.hash) {
-    builtUrl += buildHash(options.hash, options.lowerCase);
+  if (buildOptions?.hash) {
+    result += buildHash(buildOptions.hash, buildOptions.lowerCase);
   }
 
-  return builtUrl;
+  return result;
 }
 
 export { buildUrl };
