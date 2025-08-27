@@ -19,6 +19,8 @@ A small, fast library for building URLs with a fluent API. Fully typed for TypeS
 - 🔧 **Flexible** - Multiple ways to handle array query parameters
 - ✨ **Clean API** - Simple and intuitive interface
 - 🛡️ **Safe** - Properly encodes URLs and handles edge cases
+- 🧪 **Well Tested** - Comprehensive test coverage with 137+ test cases
+- 🔄 **Smart Merging** - Automatically merges with existing query parameters
 
 ## Installation
 
@@ -249,6 +251,23 @@ buildUrl('https://api.example.com', {
   }
 });
 // → https://api.example.com?active=true&deleted=false
+
+// Date objects
+const date = new Date('2024-01-01T00:00:00Z');
+buildUrl('https://api.example.com', {
+  queryParams: {
+    created: date
+  }
+});
+// → https://api.example.com?created=Mon%20Jan%2001%202024...
+
+// Nested objects (automatically stringified)
+buildUrl('https://api.example.com', {
+  queryParams: {
+    filter: { status: 'active', role: 'admin' }
+  }
+});
+// → https://api.example.com?filter=%7B%22status%22%3A%22active%22%2C%22role%22%3A%22admin%22%7D
 ```
 
 ## Advanced Usage
@@ -346,6 +365,54 @@ buildUrl('https://example.com', {
   }
 });
 // → https://example.com?empty=&zero=0&false=false
+
+// URLs with existing query parameters (automatic merging)
+buildUrl('https://example.com?existing=param', {
+  queryParams: {
+    new: 'value'
+  }
+});
+// → https://example.com?existing=param&new=value
+
+// URLs with ports and authentication
+buildUrl('http://user:pass@localhost:3000', {
+  path: 'api/secure'
+});
+// → http://user:pass@localhost:3000/api/secure
+
+// Special protocols
+buildUrl('file:///home/user/data', {
+  queryParams: { version: 2 }
+});
+// → file:///home/user/data?version=2
+
+// Internationalized domain names and emoji
+buildUrl('https://例え.jp', {
+  queryParams: {
+    search: '🔍',
+    text: '你好'
+  }
+});
+// → https://例え.jp?search=%F0%9F%94%8D&text=%E4%BD%A0%E5%A5%BD
+
+// Empty arrays are omitted
+buildUrl('https://api.example.com', {
+  queryParams: {
+    ids: [],
+    name: 'test'
+  }
+});
+// → https://api.example.com?name=test
+
+// Arrays with null/undefined values
+buildUrl('https://api.example.com', {
+  queryParams: {
+    items: ['one', null, undefined, 'four']
+  },
+  disableCSV: true
+});
+// → https://api.example.com?items=one&items=&items=four
+// (undefined values are filtered out)
 ```
 
 ## Migration Guide
@@ -388,7 +455,22 @@ npm run build
 
 # Run linting
 npm run lint
+
+# Type checking
+npm run typecheck
 ```
+
+### Test Coverage
+
+The library has comprehensive test coverage with 137+ test cases covering:
+- Basic URL building scenarios
+- Various array handling modes
+- Special characters and encoding
+- Edge cases and error handling
+- Protocol support (http, https, file, ftp, etc.)
+- Internationalization and emoji support
+- Query parameter merging
+- Date and object serialization
 
 ## License
 
