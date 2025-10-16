@@ -1094,10 +1094,10 @@
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.2.7.tgz#eb5014dfd0b03e7f3ba2eeeff506eed89b028058"
   integrity sha512-YLT9Zo3oNPJoBjBc4q8G2mjU4tqIbf5CEOORbUUr48dCD9q3umJ3IPlVqOqDakPfd2HuwccBaqlGhN4Gmr5OWg==
 
-"@rollup/plugin-commonjs@28.0.7":
-  version "28.0.7"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-28.0.7.tgz#6479fc46f7dc4c65377643704ab170c2bbf00d8d"
-  integrity sha512-6cE2Wr/MkpdtTS8gXlCn9Zdmf7e9Xm96yFqOwFEXuvYLAHtjRf57/n6GEVF4K8NSesT1eKdBtcDA/SQdpW/8nA==
+"@rollup/plugin-commonjs@28.0.8":
+  version "28.0.8"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-28.0.8.tgz#ba125055ebbb8375d2d2e465a3bedf434f5b2929"
+  integrity sha512-o1Ug9PxYsF61R7/NXO/GgMZZproLd/WH2XA53Tp9ppf6bU1lMlTtC/gUM6zM3mesi2E0rypk+PNtVrELREyWEQ==
   dependencies:
     "@rollup/pluginutils" "^5.0.1"
     commondir "^1.0.1"
@@ -1370,10 +1370,10 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jasmine@5.1.10":
-  version "5.1.10"
-  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-5.1.10.tgz#07077d59692d2c7ad1c65036565930480d90028f"
-  integrity sha512-ctILpOSFD58PTyGwr400GadefIHPqdWQ8VlZI9D65USOWR/aIw8dkDAw17KPCu/Wn+e+r9BWpPtmuB5T/pP8ng==
+"@types/jasmine@5.1.11":
+  version "5.1.11"
+  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-5.1.11.tgz#2e48472c2e542c341419da8fc4ef0cffd1d7722a"
+  integrity sha512-eAij9lMAsosuA8cvRcqw7p2vO+LUraktQDmOUFx2jAnya8NUchr3DryHksfhZbRzU83vzNUSZhlk1cFdoePxwA==
 
 "@types/jest@30.0.0":
   version "30.0.0"
