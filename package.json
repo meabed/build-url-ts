@@ -63,7 +63,7 @@
     "@types/jasmine": "5.1.15",
     "@types/jest": "30.0.0",
     "typescript-eslint": "8.58.0",
-    "eslint": "10.1.0",
+    "eslint": "10.2.0",
     "eslint-config-prettier": "10.1.8",
     "jest": "30.3.0",
     "prettier": "3.8.1",
