@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'bun:test';
 import { buildUrl } from '../src';
 
 describe('buildUrl', () => {
@@ -16,7 +17,7 @@ describe('buildUrl', () => {
   it('should append a path when passed as an option', () => {
     expect(
       buildUrl('http://example.com', {
-        path: 'about/me'
+        path: 'about/me',
       })
     ).toEqual('http://example.com/about/me');
   });
@@ -24,7 +25,7 @@ describe('buildUrl', () => {
   it('should append a path when passed an option with a leading "/"', () => {
     expect(
       buildUrl('http://example.com', {
-        path: '/about/me'
+        path: '/about/me',
       })
     ).toEqual('http://example.com/about/me');
   });
@@ -34,8 +35,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           foo: 'bar',
-          bar: 'baz'
-        }
+          bar: 'baz',
+        },
       })
     ).toEqual('http://example.com?foo=bar&bar=baz');
   });
@@ -45,8 +46,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           foo: 'bar',
-          bar: ['one', 'two', 'three']
-        }
+          bar: ['one', 'two', 'three'],
+        },
       })
     ).toEqual('http://example.com?foo=bar&bar=one%2Ctwo%2Cthree');
   });
@@ -54,7 +55,7 @@ describe('buildUrl', () => {
   it('should append a fragment identifier when passed as an option', () => {
     expect(
       buildUrl('http://example.com', {
-        hash: 'contact'
+        hash: 'contact',
       })
     ).toEqual('http://example.com#contact');
   });
@@ -65,8 +66,8 @@ describe('buildUrl', () => {
         path: 'about/me',
         queryParams: {
           foo: 'bar',
-          bar: 'baz'
-        }
+          bar: 'baz',
+        },
       })
     ).toEqual('http://example.com/about/me?foo=bar&bar=baz');
   });
@@ -75,7 +76,7 @@ describe('buildUrl', () => {
     expect(
       buildUrl('http://example.com', {
         path: 'about/me',
-        hash: 'contact'
+        hash: 'contact',
       })
     ).toEqual('http://example.com/about/me#contact');
   });
@@ -87,8 +88,8 @@ describe('buildUrl', () => {
         hash: 'contact',
         queryParams: {
           foo: 'bar',
-          bar: 'baz'
-        }
+          bar: 'baz',
+        },
       })
     ).toEqual('http://example.com/about/me?foo=bar&bar=baz#contact');
   });
@@ -99,8 +100,8 @@ describe('buildUrl', () => {
         hash: 'contact',
         queryParams: {
           foo: 'bar',
-          bar: 'baz'
-        }
+          bar: 'baz',
+        },
       })
     ).toEqual('http://example.com?foo=bar&bar=baz#contact');
   });
@@ -110,8 +111,8 @@ describe('buildUrl', () => {
       buildUrl('', {
         queryParams: {
           foo: 'bar',
-          bar: 'baz'
-        }
+          bar: 'baz',
+        },
       })
     ).toEqual('?foo=bar&bar=baz');
   });
@@ -121,8 +122,8 @@ describe('buildUrl', () => {
       buildUrl(null, {
         queryParams: {
           foo: 'bar',
-          bar: 'baz'
-        }
+          bar: 'baz',
+        },
       })
     ).toEqual('?foo=bar&bar=baz');
   });
@@ -132,8 +133,8 @@ describe('buildUrl', () => {
       buildUrl({
         queryParams: {
           foo: 'bar',
-          bar: 'baz'
-        }
+          bar: 'baz',
+        },
       })
     ).toEqual('?foo=bar&bar=baz');
   });
@@ -141,7 +142,7 @@ describe('buildUrl', () => {
   it('should return only the hash when URL parameter is an empty string', () => {
     expect(
       buildUrl('', {
-        hash: 'about'
+        hash: 'about',
       })
     ).toEqual('#about');
   });
@@ -149,7 +150,7 @@ describe('buildUrl', () => {
   it('should return only the hash when URL parameter is null', () => {
     expect(
       buildUrl(null, {
-        hash: 'about'
+        hash: 'about',
       })
     ).toEqual('#about');
   });
@@ -157,7 +158,7 @@ describe('buildUrl', () => {
   it('should return only the has when URL parameter is not present', () => {
     expect(
       buildUrl({
-        hash: 'about'
+        hash: 'about',
       })
     ).toEqual('#about');
   });
@@ -165,7 +166,7 @@ describe('buildUrl', () => {
   it('should return only the path when URL parameter is an empty string', () => {
     expect(
       buildUrl('', {
-        path: 'contact'
+        path: 'contact',
       })
     ).toEqual('/contact');
   });
@@ -173,7 +174,7 @@ describe('buildUrl', () => {
   it('should return only the path when URL parameter is null', () => {
     expect(
       buildUrl(null, {
-        path: 'contact'
+        path: 'contact',
       })
     ).toEqual('/contact');
   });
@@ -181,7 +182,7 @@ describe('buildUrl', () => {
   it('should return only the path when URL parameter is not present', () => {
     expect(
       buildUrl({
-        path: 'contact'
+        path: 'contact',
       })
     ).toEqual('/contact');
   });
@@ -193,8 +194,8 @@ describe('buildUrl', () => {
         hash: 'about',
         queryParams: {
           foo: 'bar',
-          bar: 'baz'
-        }
+          bar: 'baz',
+        },
       })
     ).toEqual('/contact?foo=bar&bar=baz#about');
   });
@@ -206,8 +207,8 @@ describe('buildUrl', () => {
         hash: 'about',
         queryParams: {
           foo: 'bar',
-          bar: 'baz'
-        }
+          bar: 'baz',
+        },
       })
     ).toEqual('/contact?foo=bar&bar=baz#about');
   });
@@ -219,8 +220,8 @@ describe('buildUrl', () => {
         hash: 'about',
         queryParams: {
           foo: 'bar',
-          bar: 'baz'
-        }
+          bar: 'baz',
+        },
       })
     ).toEqual('/contact?foo=bar&bar=baz#about');
   });
@@ -230,8 +231,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           foo: 'bar',
-          bar: void 0
-        }
+          bar: void 0,
+        },
       })
     ).toEqual('http://example.com?foo=bar');
   });
@@ -241,8 +242,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           foo: 'bar',
-          bar0: 0
-        }
+          bar0: 0,
+        },
       })
     ).toEqual('http://example.com?foo=bar&bar0=0');
   });
@@ -250,7 +251,7 @@ describe('buildUrl', () => {
   it('should not show a double slash with domain', () => {
     expect(
       buildUrl('http://example.com/', {
-        path: '/contact'
+        path: '/contact',
       })
     ).toEqual('http://example.com/contact');
   });
@@ -262,7 +263,7 @@ describe('buildUrl', () => {
       param2: 'Hawai`i',
       param3: '"Bull" Connor',
       param4: 'Lech Wałęsa',
-      param5: 'Herr Müller'
+      param5: 'Herr Müller',
     };
     const url = buildUrl('https://example.com', { queryParams });
     const queryParamString = Object.values(queryParams)
@@ -279,8 +280,8 @@ describe('buildUrl', () => {
         hash: ' about ',
         queryParams: {
           foo: ' bar ',
-          bar: ' baz '
-        }
+          bar: ' baz ',
+        },
       })
     ).toEqual('http://example.com/contact?foo=bar&bar=baz#about');
   });
@@ -292,8 +293,8 @@ describe('buildUrl', () => {
         hash: 75885,
         queryParams: {
           foo: 12454,
-          bar: 123457
-        }
+          bar: 123457,
+        },
       })
     ).toEqual('http://example.com/12345?foo=12454&bar=123457#75885');
   });
@@ -306,8 +307,8 @@ describe('buildUrl', () => {
         lowerCase: true,
         queryParams: {
           foo: 'barRR',
-          bar: 'baZXx                    '
-        }
+          bar: 'baZXx                    ',
+        },
       })
     ).toEqual('http://example.com/contact?foo=barrr&bar=bazxx#about12');
   });
@@ -320,8 +321,8 @@ describe('buildUrl', () => {
         lowerCase: false,
         queryParams: {
           foo: 'bAr',
-          bar: ['oNe', 'TWO', 'thrEE', 123]
-        }
+          bar: ['oNe', 'TWO', 'thrEE', 123],
+        },
       })
     ).toEqual('http://example.com/AbouT?foo=bAr&bar=oNe%2CTWO%2CthrEE%2C123#ConTacT');
   });
@@ -333,8 +334,8 @@ describe('buildUrl', () => {
         hash: 'ConTacT',
         queryParams: {
           foo: 'bAr',
-          bar: ['oNe', 'TWO', 'thrEE', 123]
-        }
+          bar: ['oNe', 'TWO', 'thrEE', 123],
+        },
       })
     ).toEqual('http://example.com/AbouT?foo=bAr&bar=oNe%2CTWO%2CthrEE%2C123#ConTacT');
   });
@@ -345,8 +346,8 @@ describe('buildUrl', () => {
         disableCSV: true,
         queryParams: {
           foo: 'bar',
-          bar: ['one', 'two', 'three']
-        }
+          bar: ['one', 'two', 'three'],
+        },
       })
     ).toEqual('http://example.com?foo=bar&bar=one&bar=two&bar=three');
   });
@@ -372,8 +373,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           foo: 'bar',
-          bar: null
-        }
+          bar: null,
+        },
       })
     ).toEqual('http://example.com?foo=bar&bar=');
   });
@@ -381,7 +382,7 @@ describe('buildUrl', () => {
   it('should handle undefined url', () => {
     expect(
       buildUrl(undefined, {
-        path: '/api'
+        path: '/api',
       })
     ).toEqual('/api');
   });
@@ -390,8 +391,8 @@ describe('buildUrl', () => {
     expect(
       buildUrl('http://example.com?existing=param', {
         queryParams: {
-          foo: 'bar'
-        }
+          foo: 'bar',
+        },
       })
     ).toEqual('http://example.com?existing=param&foo=bar');
   });
@@ -399,7 +400,7 @@ describe('buildUrl', () => {
   it('should handle URLs with existing hash', () => {
     expect(
       buildUrl('http://example.com#existing', {
-        hash: 'new'
+        hash: 'new',
       })
     ).toEqual('http://example.com#new');
   });
@@ -409,8 +410,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com:8080', {
         path: 'api',
         queryParams: {
-          foo: 'bar'
-        }
+          foo: 'bar',
+        },
       })
     ).toEqual('http://example.com:8080/api?foo=bar');
   });
@@ -418,7 +419,7 @@ describe('buildUrl', () => {
   it('should handle URLs with authentication', () => {
     expect(
       buildUrl('http://user:pass@example.com', {
-        path: 'secure'
+        path: 'secure',
       })
     ).toEqual('http://user:pass@example.com/secure');
   });
@@ -428,8 +429,8 @@ describe('buildUrl', () => {
       buildUrl('//example.com', {
         path: 'api',
         queryParams: {
-          foo: 'bar'
-        }
+          foo: 'bar',
+        },
       })
     ).toEqual('//example.com/api?foo=bar');
   });
@@ -439,8 +440,8 @@ describe('buildUrl', () => {
       buildUrl('http://localhost:3000', {
         path: 'api/users',
         queryParams: {
-          id: '123'
-        }
+          id: '123',
+        },
       })
     ).toEqual('http://localhost:3000/api/users?id=123');
   });
@@ -450,8 +451,8 @@ describe('buildUrl', () => {
       buildUrl('http://192.168.1.1', {
         path: 'admin',
         queryParams: {
-          action: 'login'
-        }
+          action: 'login',
+        },
       })
     ).toEqual('http://192.168.1.1/admin?action=login');
   });
@@ -459,7 +460,7 @@ describe('buildUrl', () => {
   it('should handle IPv6 URLs', () => {
     expect(
       buildUrl('http://[2001:db8::1]', {
-        path: 'api'
+        path: 'api',
       })
     ).toEqual('http://[2001:db8::1]/api');
   });
@@ -468,8 +469,8 @@ describe('buildUrl', () => {
     expect(
       buildUrl('file:///home/user/file.txt', {
         queryParams: {
-          version: '2'
-        }
+          version: '2',
+        },
       })
     ).toEqual('file:///home/user/file.txt?version=2');
   });
@@ -477,7 +478,7 @@ describe('buildUrl', () => {
   it('should handle deeply nested paths', () => {
     expect(
       buildUrl('http://example.com', {
-        path: 'api/v1/users/123/posts/456/comments/789'
+        path: 'api/v1/users/123/posts/456/comments/789',
       })
     ).toEqual('http://example.com/api/v1/users/123/posts/456/comments/789');
   });
@@ -485,7 +486,7 @@ describe('buildUrl', () => {
   it('should handle special characters in paths', () => {
     expect(
       buildUrl('http://example.com', {
-        path: 'api/users/@john/profile'
+        path: 'api/users/@john/profile',
       })
     ).toEqual('http://example.com/api/users/@john/profile');
   });
@@ -495,8 +496,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           foo: '',
-          bar: 'baz'
-        }
+          bar: 'baz',
+        },
       })
     ).toEqual('http://example.com?foo=&bar=baz');
   });
@@ -506,8 +507,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           active: true,
-          disabled: false
-        }
+          disabled: false,
+        },
       })
     ).toEqual('http://example.com?active=true&disabled=false');
   });
@@ -516,8 +517,8 @@ describe('buildUrl', () => {
     expect(
       buildUrl('http://example.com', {
         queryParams: {
-          items: [1, 'two', true, null]
-        }
+          items: [1, 'two', true, null],
+        },
       })
     ).toEqual('http://example.com?items=1%2Ctwo%2Ctrue%2C');
   });
@@ -526,8 +527,8 @@ describe('buildUrl', () => {
     expect(
       buildUrl('http://example.com', {
         queryParams: {
-          filter: { name: 'john', age: 30 }
-        }
+          filter: { name: 'john', age: 30 },
+        },
       })
     ).toEqual('http://example.com?filter=%7B%22name%22%3A%22john%22%2C%22age%22%3A30%7D');
   });
@@ -537,8 +538,8 @@ describe('buildUrl', () => {
     expect(
       buildUrl('http://example.com', {
         queryParams: {
-          data: longValue
-        }
+          data: longValue,
+        },
       })
     ).toEqual(`http://example.com?data=${encodeURIComponent(longValue)}`);
   });
@@ -546,7 +547,7 @@ describe('buildUrl', () => {
   it('should handle multiple path segments with trailing slashes', () => {
     expect(
       buildUrl('http://example.com/api/', {
-        path: '/v1/users/'
+        path: '/v1/users/',
       })
     ).toEqual('http://example.com/api/v1/users/');
   });
@@ -554,7 +555,7 @@ describe('buildUrl', () => {
   it('should handle hash with special characters', () => {
     expect(
       buildUrl('http://example.com', {
-        hash: 'section-1.2.3'
+        hash: 'section-1.2.3',
       })
     ).toEqual('http://example.com#section-1.2.3');
   });
@@ -564,8 +565,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           'user.name': 'john',
-          'api-key': 'secret'
-        }
+          'api-key': 'secret',
+        },
       })
     ).toEqual('http://example.com?user.name=john&api-key=secret');
   });
@@ -573,7 +574,7 @@ describe('buildUrl', () => {
   it('should handle URLs with multiple consecutive slashes', () => {
     expect(
       buildUrl('http://example.com///api///', {
-        path: '///users///'
+        path: '///users///',
       })
     ).toEqual('http://example.com///api/users/');
   });
@@ -583,8 +584,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com?a=1&b=2', {
         queryParams: {
           c: '3',
-          d: '4'
-        }
+          d: '4',
+        },
       })
     ).toEqual('http://example.com?a=1&b=2&c=3&d=4');
   });
@@ -594,8 +595,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           formula: 'a=b+c',
-          equation: '2+2=4'
-        }
+          equation: '2+2=4',
+        },
       })
     ).toEqual('http://example.com?formula=a%3Db%2Bc&equation=2%2B2%3D4');
   });
@@ -605,8 +606,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           company: 'Smith & Sons',
-          title: 'R&D Manager'
-        }
+          title: 'R&D Manager',
+        },
       })
     ).toEqual('http://example.com?company=Smith%20%26%20Sons&title=R%26D%20Manager');
   });
@@ -616,8 +617,8 @@ describe('buildUrl', () => {
       buildUrl('http://例え.jp', {
         path: 'ページ',
         queryParams: {
-          検索: 'テスト'
-        }
+          検索: 'テスト',
+        },
       })
     ).toEqual('http://例え.jp/ページ?%E6%A4%9C%E7%B4%A2=%E3%83%86%E3%82%B9%E3%83%88');
   });
@@ -627,8 +628,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           mood: '😊',
-          reaction: '👍'
-        }
+          reaction: '👍',
+        },
       })
     ).toEqual('http://example.com?mood=%F0%9F%98%8A&reaction=%F0%9F%91%8D');
   });
@@ -638,8 +639,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           bigInt: Number.MAX_SAFE_INTEGER,
-          bigFloat: 1.7976931348623157e308
-        }
+          bigFloat: 1.7976931348623157e308,
+        },
       })
     ).toEqual('http://example.com?bigInt=9007199254740991&bigFloat=1.7976931348623157e%2B308');
   });
@@ -649,8 +650,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           temperature: -40,
-          balance: -123.45
-        }
+          balance: -123.45,
+        },
       })
     ).toEqual('http://example.com?temperature=-40&balance=-123.45');
   });
@@ -660,8 +661,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         queryParams: {
           small: 1e-10,
-          large: 1e10
-        }
+          large: 1e10,
+        },
       })
     ).toEqual('http://example.com?small=1e-10&large=10000000000');
   });
@@ -671,8 +672,8 @@ describe('buildUrl', () => {
     expect(
       buildUrl('http://example.com', {
         queryParams: {
-          date: date
-        }
+          date: date,
+        },
       })
     ).toEqual(`http://example.com?date=${encodeURIComponent(date.toString())}`);
   });
@@ -682,8 +683,8 @@ describe('buildUrl', () => {
     expect(
       buildUrl('http://example.com', {
         queryParams: {
-          symbol: sym.toString()
-        }
+          symbol: sym.toString(),
+        },
       })
     ).toEqual('http://example.com?symbol=Symbol(test)');
   });
@@ -694,8 +695,8 @@ describe('buildUrl', () => {
         disableCSV: true,
         queryParams: {
           items: [],
-          foo: 'bar'
-        }
+          foo: 'bar',
+        },
       })
     ).toEqual('http://example.com?foo=bar');
   });
@@ -705,8 +706,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         disableCSV: true,
         queryParams: {
-          items: ['only']
-        }
+          items: ['only'],
+        },
       })
     ).toEqual('http://example.com?items=only');
   });
@@ -714,7 +715,7 @@ describe('buildUrl', () => {
   it('should handle paths with query-like strings', () => {
     expect(
       buildUrl('http://example.com', {
-        path: 'search?query=test'
+        path: 'search?query=test',
       })
     ).toEqual('http://example.com/search?query=test');
   });
@@ -722,7 +723,7 @@ describe('buildUrl', () => {
   it('should handle paths with hash-like strings', () => {
     expect(
       buildUrl('http://example.com', {
-        path: 'page#section'
+        path: 'page#section',
       })
     ).toEqual('http://example.com/page#section');
   });
@@ -730,7 +731,7 @@ describe('buildUrl', () => {
   it('should handle combining path with existing URL path', () => {
     expect(
       buildUrl('http://example.com/api', {
-        path: 'v2/users'
+        path: 'v2/users',
       })
     ).toEqual('http://example.com/api/v2/users');
   });
@@ -740,8 +741,8 @@ describe('buildUrl', () => {
       buildUrl('ftp://ftp.example.com', {
         path: 'pub/files',
         queryParams: {
-          type: 'binary'
-        }
+          type: 'binary',
+        },
       })
     ).toEqual('ftp://ftp.example.com/pub/files?type=binary');
   });
@@ -750,8 +751,8 @@ describe('buildUrl', () => {
     expect(
       buildUrl('data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==', {
         queryParams: {
-          version: '1'
-        }
+          version: '1',
+        },
       })
     ).toEqual('data:text/plain;base64,SGVsbG8sIFdvcmxkIQ==?version=1');
   });
@@ -761,8 +762,8 @@ describe('buildUrl', () => {
       buildUrl('mailto:test@example.com', {
         queryParams: {
           subject: 'Hello World',
-          body: 'Test message'
-        }
+          body: 'Test message',
+        },
       })
     ).toEqual('mailto:test@example.com?subject=Hello%20World&body=Test%20message');
   });
@@ -771,8 +772,8 @@ describe('buildUrl', () => {
     expect(
       buildUrl('tel:+1234567890', {
         queryParams: {
-          extension: '123'
-        }
+          extension: '123',
+        },
       })
     ).toEqual('tel:+1234567890?extension=123');
   });
@@ -780,7 +781,7 @@ describe('buildUrl', () => {
   it('should handle edge case with only hash character', () => {
     expect(
       buildUrl('http://example.com', {
-        hash: '#'
+        hash: '#',
       })
     ).toEqual('http://example.com##');
   });
@@ -789,8 +790,8 @@ describe('buildUrl', () => {
     expect(
       buildUrl('http://example.com', {
         queryParams: {
-          '?': '?'
-        }
+          '?': '?',
+        },
       })
     ).toEqual('http://example.com?%3F=%3F');
   });
@@ -800,8 +801,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         disableCSV: true,
         queryParams: {
-          items: ['one', null, 'three']
-        }
+          items: ['one', null, 'three'],
+        },
       })
     ).toEqual('http://example.com?items=one&items=&items=three');
   });
@@ -811,8 +812,8 @@ describe('buildUrl', () => {
       buildUrl('http://example.com', {
         disableCSV: true,
         queryParams: {
-          items: ['one', undefined, 'three']
-        }
+          items: ['one', undefined, 'three'],
+        },
       })
     ).toEqual('http://example.com?items=one&items=three');
   });

@@ -1,60 +1,52 @@
 name: CI
+
+# Validation gate for PRs and feature-branch pushes. Master/develop pushes go
+# through the Release workflow instead, which calls the same validate workflow
+# before publishing.
+
 on:
   workflow_dispatch:
-  workflow_call:
+  pull_request:
+    branches:
+      - master
+      - develop
+    types: [opened, synchronize, reopened, ready_for_review]
   push:
+    branches-ignore:
+      - master
+      - develop
     paths:
       - 'src/**'
       - '__tests__/**'
+      - 'bun.lock'
       - 'package.json'
-      - 'yarn.lock'
-      - 'release.config.js'
-      - '.github/workflows/ci.yml'
-    branches:
-      - '*'
-      - '**'
-      - '!master'
+      - 'tsconfig*.json'
+      - 'rollup.config*.cjs'
+      - 'biome.json'
+      - '.releaserc.json'
+      - '.github/workflows/**'
 
-env:
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  CI: true
+# Cancel superseded runs on the same branch — feature-branch CI is cheap to
+# re-run and the only thing that matters is the latest commit's verdict.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
-  CI:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-
-    permissions:
-      packages: write
-      contents: write
-
-    steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - uses: styfle/cancel-workflow-action@0.13.1
-        with:
-          workflow_id: ci.yml
-          access_token: ${{ github.token }}
-
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 30
-
-      - uses: FranzDiebold/github-env-vars-action@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-
-      - name: Yarn
-        run: yarn install --frozen-lockfile
-
-      - name: Test
-        run: |
-          yarn test
-
-      - name: Release
-        if: github.ref == 'refs/heads/develop'
-        run: |
-          npm i -g semantic-release @semantic-release/git @semantic-release/github conventional-changelog-conventionalcommits
-          npx semantic-release --no-ci --debug
+  # Matrix on the two currently-supported LTS Node lines:
+  #   - 22 (Maintenance LTS until 2027-04-30) — also the engines.node floor
+  #   - 24 (Active LTS until 2026-10-20, then Maintenance until 2028-04-30)
+  validate:
+    name: Validate
+    if: github.event.pull_request.draft == false || github.event_name != 'pull_request'
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['22', '24']
+    uses: ./.github/workflows/validate.yml
+    with:
+      node-version: ${{ matrix.node-version }}
+      run-build: true

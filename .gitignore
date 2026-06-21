@@ -1,3 +1,12 @@
+.DS_Store
 node_modules
-dist
 .idea
+coverage
+.coveralls.yml
+*.swp
+*.tsbuildinfo
+.nyc_output/
+dist
+dist-tarball
+release-output.txt
+yarn-error.log

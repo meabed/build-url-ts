@@ -15,7 +15,8 @@ A small, fast library for building URLs with a fluent API. Fully typed for TypeS
 
 - 🚀 **Small & Fast** - Minimal footprint with zero dependencies
 - 📦 **TypeScript Support** - Full TypeScript definitions included
-- 🌐 **Universal** - Works in Node.js and all modern browsers
+- 🔀 **Dual Package** - First-class ESM and CommonJS entry points
+- 🌐 **Universal** - Works in Node.js, Bun, and all modern browsers
 - 🔧 **Flexible** - Multiple ways to handle array query parameters
 - ✨ **Clean API** - Simple and intuitive interface
 - 🛡️ **Safe** - Properly encodes URLs and handles edge cases
@@ -25,6 +26,9 @@ A small, fast library for building URLs with a fluent API. Fully typed for TypeS
 ## Installation
 
 ```bash
+# bun
+bun add build-url-ts
+
 # npm
 npm install build-url-ts
 
@@ -441,23 +445,32 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## Running Tests
+## Development
+
+This project uses [Bun](https://bun.sh) as its package manager, test runner, and script runner.
 
 ```bash
+# Install dependencies
+bun install
+
 # Run tests
-npm test
+bun test
 
 # Run tests in watch mode
-npm run test-watch
+bun run test:watch
 
-# Build the library
-npm run build
+# Run tests with coverage
+bun run test:coverage
 
-# Run linting
-npm run lint
+# Build the library (CJS + ESM + type declarations)
+bun run build
+
+# Lint and format (Biome)
+bun run lint
+bun run check
 
 # Type checking
-npm run typecheck
+bun run typecheck
 ```
 
 ### Test Coverage

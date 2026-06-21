@@ -1,12 +1,34 @@
-# EditorConfig is awesome: http://EditorConfig.org
-
 root = true
 
 [*]
+charset = utf-8
+max_line_length = 240
 end_of_line = lf
 insert_final_newline = true
-
-[*.{js, ts}]
-charset = utf-8
+trim_trailing_whitespace = true
 indent_style = space
 indent_size = 2
+
+[{Makefile, makefile}]
+indent_style = tab
+
+[*.go]
+indent_style = tab
+
+[{*.js, *.ts, *.jsx, *.tsx}]
+indent_size = 2
+
+[*.html]
+indent_size = 2
+
+[*.bat]
+end_of_line = crlf
+
+[*.{json, yml, yaml}]
+indent_size = 2
+
+[*.diff]
+indent_size = 1
+
+[*.md]
+trim_trailing_whitespace = false

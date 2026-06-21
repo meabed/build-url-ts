@@ -103,7 +103,7 @@ function formatValue(value: QueryParamValue, lowerCase?: boolean): string {
   if (value === 0) return '0';
 
   // Handle NaN explicitly
-  if (typeof value === 'number' && isNaN(value)) return 'NaN';
+  if (typeof value === 'number' && Number.isNaN(value)) return 'NaN';
 
   if (!value) return '';
 
@@ -171,7 +171,6 @@ export function buildHash(hash: string | number, lowerCase?: boolean): string {
  */
 function parseUrl(url: string): { baseUrl: string; queryParams: IQueryParams; hash: string } {
   const hashIndex = url.indexOf('#');
-  const queryIndex = url.indexOf('?');
 
   let baseUrl = url;
   const queryParams: IQueryParams = {};
