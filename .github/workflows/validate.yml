@@ -68,3 +68,7 @@ jobs:
       - name: Build
         if: inputs.run-build
         run: bun run build
+
+      - name: Check package exports (publint + are-the-types-wrong)
+        if: inputs.run-build
+        run: bun run check:exports

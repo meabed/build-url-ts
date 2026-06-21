@@ -1,75 +1,62 @@
 const { readFileSync } = require('fs');
 const esbuild = require('rollup-plugin-esbuild').default;
-const typescript = require('@rollup/plugin-typescript');
+const dts = require('rollup-plugin-dts').default;
 const resolve = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 
 const pkg = JSON.parse(readFileSync('./package.json', 'utf8'));
 
-// Public entry points — each gets a CJS (.js) and ESM (.mjs) bundle. Mirrors
-// the `exports` map in package.json; keep the two in sync when adding/removing
-// a public sub-path.
-const entries = ['index'];
-
+// The library is dependency-free and uses only universal JS, so nothing is
+// external — every output is a self-contained, tree-shakeable bundle.
 const external = [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})];
 
-const codePlugins = () => [
+// es2019 keeps the output readable and widely compatible (all modern browsers,
+// Node 18+, Bun, Deno) while letting consumers' bundlers tree-shake the ESM.
+const codePlugins = ({ minify = false } = {}) => [
   resolve({ extensions: ['.ts', '.js'] }),
   commonjs(),
-  esbuild({
-    target: 'es2020',
-    tsconfig: './tsconfig.json',
-    sourceMap: true,
-  }),
+  esbuild({ target: 'es2019', tsconfig: './tsconfig.json', sourceMap: true, minify }),
 ];
 
-// Single declaration pass for the whole src tree — emitted alongside the
-// bundles so each public entry has its matching `.d.ts`.
-const declarationConfig = {
-  input: 'src/index.ts',
-  output: {
-    dir: 'dist',
-    format: 'es',
-    sourcemap: true,
-  },
-  external,
-  plugins: [
-    typescript({
-      tsconfig: './tsconfig.json',
-      declaration: true,
-      declarationDir: './dist',
-      emitDeclarationOnly: true,
-      rootDir: './src',
-      exclude: ['**/*.test.ts', '**/*.spec.ts', '__tests__/**/*'],
-      compilerOptions: {
-        module: 'esnext',
-      },
-    }),
-  ],
-};
-
-const bundles = entries.flatMap((name) => [
+module.exports = [
+  // ESM build — primary entry for bundlers, Node, Bun, Deno. Preserves named
+  // exports so unused functions are dropped (with "sideEffects": false).
   {
-    input: `src/${name}.ts`,
+    input: 'src/index.ts',
+    output: { file: 'dist/index.mjs', format: 'es', sourcemap: true },
+    external,
+    plugins: codePlugins(),
+  },
+  // CommonJS build — for `require()` consumers on legacy Node toolchains.
+  {
+    input: 'src/index.ts',
+    output: { file: 'dist/index.cjs', format: 'cjs', sourcemap: true, exports: 'named' },
+    external,
+    plugins: codePlugins(),
+  },
+  // Minified UMD build — for direct browser `<script>` / CDN use, exposing the
+  // global `buildUrl`. Served via the package's unpkg/jsdelivr fields.
+  {
+    input: 'src/index.ts',
     output: {
-      file: `dist/${name}.js`,
-      format: 'cjs',
+      file: 'dist/index.umd.min.js',
+      format: 'umd',
+      name: 'buildUrl',
       sourcemap: true,
       exports: 'named',
     },
     external,
-    plugins: codePlugins(),
+    plugins: codePlugins({ minify: true }),
   },
+  // Type declarations — emitted to the three extensions the exports map needs
+  // so the "import" and "require" conditions each resolve unambiguous types.
   {
-    input: `src/${name}.ts`,
-    output: {
-      file: `dist/${name}.mjs`,
-      format: 'esm',
-      sourcemap: true,
-    },
-    external,
-    plugins: codePlugins(),
+    input: 'src/index.ts',
+    output: [
+      { file: 'dist/index.d.ts', format: 'es' },
+      { file: 'dist/index.d.mts', format: 'es' },
+      { file: 'dist/index.d.cts', format: 'es' },
+    ],
+    plugins: [dts()],
   },
-]);
-
-module.exports = [...bundles, declarationConfig];
+];
