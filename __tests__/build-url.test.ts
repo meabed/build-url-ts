@@ -817,4 +817,80 @@ describe('buildUrl', () => {
       })
     ).toEqual('http://example.com?items=one&items=three');
   });
+
+  it('should append multiple path segments passed via paths (issue #591)', () => {
+    expect(
+      buildUrl('http://example.com', {
+        paths: ['about', '/my/', '/cat'],
+        hash: 'contact',
+        queryParams: {
+          foo: 'bar',
+          bar: 'baz',
+        },
+      })
+    ).toEqual('http://example.com/about/my/cat?foo=bar&bar=baz#contact');
+  });
+
+  it('should append an array of paths segments in order', () => {
+    expect(
+      buildUrl('http://example.com', {
+        paths: ['api', 'v1', 'users'],
+      })
+    ).toEqual('http://example.com/api/v1/users');
+  });
+
+  it('should normalize slashes across paths segments', () => {
+    expect(
+      buildUrl('http://example.com', {
+        paths: ['/about/', '/my/', '/cat'],
+      })
+    ).toEqual('http://example.com/about/my/cat');
+  });
+
+  it('should append numeric paths segments', () => {
+    expect(
+      buildUrl('http://example.com', {
+        paths: ['api', 123, 'detail'],
+      })
+    ).toEqual('http://example.com/api/123/detail');
+  });
+
+  it('should ignore an empty paths array', () => {
+    expect(
+      buildUrl('http://example.com', {
+        paths: [],
+        queryParams: { foo: 'bar' },
+      })
+    ).toEqual('http://example.com?foo=bar');
+  });
+
+  it('should apply path first, then paths, when both are provided', () => {
+    expect(
+      buildUrl('http://example.com', {
+        path: 'api',
+        paths: ['v1', 'users'],
+      })
+    ).toEqual('http://example.com/api/v1/users');
+  });
+
+  it('should still accept a single string path (backward compatible)', () => {
+    expect(buildUrl('http://example.com', { path: 'about/me' })).toEqual('http://example.com/about/me');
+  });
+
+  it('should lowercase paths segments when lowerCase is set', () => {
+    expect(
+      buildUrl('http://example.com', {
+        paths: ['About', 'My', 'CAT'],
+        lowerCase: true,
+      })
+    ).toEqual('http://example.com/about/my/cat');
+  });
+
+  it('should preserve existing query values that contain "=" characters', () => {
+    expect(
+      buildUrl('http://example.com?token=a=b=c', {
+        queryParams: { foo: 'bar' },
+      })
+    ).toEqual('http://example.com?token=a%3Db%3Dc&foo=bar');
+  });
 });

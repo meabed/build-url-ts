@@ -127,7 +127,8 @@ Builds a complete URL from components.
 
 ```typescript
 interface IBuildUrlOptions {
-  path?: string | number;           // Path to append
+  path?: string | number;           // Single path segment
+  paths?: (string | number)[];      // Multiple path segments, appended in order
   queryParams?: IQueryParams;       // Query parameters object
   hash?: string | number;           // Hash/fragment identifier
   lowerCase?: boolean;              // Convert to lowercase
@@ -147,6 +148,12 @@ buildUrl('https://example.com', {
   path: 'about'
 });
 // → https://example.com/about
+
+// Multiple path segments (normalized and joined); `path` still works for one
+buildUrl('https://example.com', {
+  paths: ['about', '/my/', '/cat']
+});
+// → https://example.com/about/my/cat
 
 // With query parameters
 buildUrl('https://example.com', {

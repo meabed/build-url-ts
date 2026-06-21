@@ -6,7 +6,19 @@ to npm and GitHub Releases.
 
 ## [Unreleased]
 
+### Added
+- New `paths` option accepting an array of path segments appended in order
+  (resolves [#591](https://github.com/meabed/build-url-ts/issues/591)). The
+  existing single `path` option is unchanged and fully backward compatible; when
+  both are given, `path` is applied first.
+
+### Fixed
+- `buildUrl` now preserves existing query-string values that contain `=`
+  characters (e.g. `?token=a=b=c`) instead of truncating them.
+
 ### Changed
+- Rewrote `src/index.ts` with full JSDoc/TSDoc on every public export and clearer
+  internal documentation
 - Migrated the toolchain from yarn/Node to [Bun](https://bun.sh) for installing,
   testing, and running scripts (`bun.lock`, `packageManager: bun`)
 - Replaced Jest/ts-jest with the built-in `bun test` runner (tests import from `bun:test`)
