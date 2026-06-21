@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'bun:test';
 import { buildQueryString } from '../src';
 
 describe('buildQueryString', () => {
@@ -5,7 +6,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         foo: 'bar',
-        bar: 'baz'
+        bar: 'baz',
       })
     ).toEqual('?foo=bar&bar=baz');
   });
@@ -14,7 +15,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         foo: 'bar',
-        bar: ['one', 'two', 'three']
+        bar: ['one', 'two', 'three'],
       })
     ).toEqual('?foo=bar&bar=one%2Ctwo%2Cthree');
   });
@@ -24,7 +25,7 @@ describe('buildQueryString', () => {
       buildQueryString(
         {
           foo: 'bar',
-          bar: ['one', 'two', 'three']
+          bar: ['one', 'two', 'three'],
         },
         false,
         true
@@ -45,7 +46,7 @@ describe('buildQueryString', () => {
       buildQueryString(
         {
           foo: 'bar',
-          bar: ['one', 'two', 'three']
+          bar: ['one', 'two', 'three'],
         },
         false,
         'array'
@@ -58,7 +59,7 @@ describe('buildQueryString', () => {
       buildQueryString(
         {
           foo: 'bar',
-          bar: ['one', 'two', 'three']
+          bar: ['one', 'two', 'three'],
         },
         false,
         'order_asc'
@@ -71,7 +72,7 @@ describe('buildQueryString', () => {
       buildQueryString(
         {
           foo: 'bar',
-          bar: ['one', 'two', 'three']
+          bar: ['one', 'two', 'three'],
         },
         false,
         'order_desc'
@@ -87,7 +88,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         foo: null,
-        bar: 'baz'
+        bar: 'baz',
       })
     ).toEqual('?foo=&bar=baz');
   });
@@ -96,7 +97,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         foo: undefined,
-        bar: 'baz'
+        bar: 'baz',
       })
     ).toEqual('?bar=baz');
   });
@@ -106,7 +107,7 @@ describe('buildQueryString', () => {
       buildQueryString({
         active: true,
         disabled: false,
-        foo: 'bar'
+        foo: 'bar',
       })
     ).toEqual('?active=true&disabled=false&foo=bar');
   });
@@ -117,7 +118,7 @@ describe('buildQueryString', () => {
         count: 0,
         page: 1,
         limit: 100,
-        ratio: 3.14
+        ratio: 3.14,
       })
     ).toEqual('?count=0&page=1&limit=100&ratio=3.14');
   });
@@ -126,7 +127,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         foo: '',
-        bar: 'baz'
+        bar: 'baz',
       })
     ).toEqual('?foo=&bar=baz');
   });
@@ -137,7 +138,7 @@ describe('buildQueryString', () => {
         name: 'John & Jane',
         email: 'test@example.com',
         path: '/api/users?id=1',
-        hash: '#section'
+        hash: '#section',
       })
     ).toEqual('?name=John%20%26%20Jane&email=test%40example.com&path=%2Fapi%2Fusers%3Fid%3D1&hash=%23section');
   });
@@ -147,7 +148,7 @@ describe('buildQueryString', () => {
       buildQueryString({
         name: 'にほんご',
         emoji: '😀',
-        special: 'éáüñ'
+        special: 'éáüñ',
       })
     ).toEqual('?name=%E3%81%AB%E3%81%BB%E3%82%93%E3%81%94&emoji=%F0%9F%98%80&special=%C3%A9%C3%A1%C3%BC%C3%B1');
   });
@@ -155,7 +156,7 @@ describe('buildQueryString', () => {
   it('should handle mixed type arrays', () => {
     expect(
       buildQueryString({
-        items: [1, 'two', true, null, undefined, 3.14]
+        items: [1, 'two', true, null, undefined, 3.14],
       })
     ).toEqual('?items=1%2Ctwo%2Ctrue%2C%2C3.14');
   });
@@ -164,7 +165,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         items: [],
-        foo: 'bar'
+        foo: 'bar',
       })
     ).toEqual('?foo=bar');
   });
@@ -173,7 +174,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         filter: { name: 'john', age: 30 },
-        foo: 'bar'
+        foo: 'bar',
       })
     ).toEqual('?filter=%7B%22name%22%3A%22john%22%2C%22age%22%3A30%7D&foo=bar');
   });
@@ -182,7 +183,7 @@ describe('buildQueryString', () => {
     const date = new Date('2024-01-01T00:00:00Z');
     expect(
       buildQueryString({
-        created: date
+        created: date,
       })
     ).toEqual(`?created=${encodeURIComponent(date.toString())}`);
   });
@@ -191,7 +192,7 @@ describe('buildQueryString', () => {
     const longString = 'a'.repeat(1000);
     expect(
       buildQueryString({
-        data: longString
+        data: longString,
       })
     ).toEqual(`?data=${encodeURIComponent(longString)}`);
   });
@@ -201,7 +202,7 @@ describe('buildQueryString', () => {
       buildQueryString({
         'user.name': 'john',
         'api-key': 'secret',
-        'items[]': 'value'
+        'items[]': 'value',
       })
     ).toEqual('?user.name=john&api-key=secret&items%5B%5D=value');
   });
@@ -211,7 +212,7 @@ describe('buildQueryString', () => {
       z: '1',
       y: '2',
       x: '3',
-      a: '4'
+      a: '4',
     });
     expect(result).toEqual('?z=1&y=2&x=3&a=4');
   });
@@ -220,7 +221,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString(
         {
-          items: ['one', 'two', 'three']
+          items: ['one', 'two', 'three'],
         },
         false,
         false
@@ -231,7 +232,7 @@ describe('buildQueryString', () => {
   it('should handle single item arrays', () => {
     expect(
       buildQueryString({
-        item: ['single']
+        item: ['single'],
       })
     ).toEqual('?item=single');
   });
@@ -240,7 +241,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString(
         {
-          items: ['a&b', 'c=d', 'e?f']
+          items: ['a&b', 'c=d', 'e?f'],
         },
         false,
         true
@@ -254,7 +255,7 @@ describe('buildQueryString', () => {
         {
           FOO: 'BAR',
           BaZ: ['ONE', 'TwO', 'THRee'],
-          MiXeD: 123
+          MiXeD: 123,
         },
         true
       )
@@ -266,7 +267,7 @@ describe('buildQueryString', () => {
       buildQueryString(
         {
           items: [],
-          foo: 'bar'
+          foo: 'bar',
         },
         false,
         'array'
@@ -278,7 +279,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString(
         {
-          items: ['one', null, undefined, 'four']
+          items: ['one', null, undefined, 'four'],
         },
         false,
         'array'
@@ -290,7 +291,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString(
         {
-          items: [1, 'two', true, null]
+          items: [1, 'two', true, null],
         },
         false,
         'order_asc'
@@ -302,7 +303,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString(
         {
-          item: ['single']
+          item: ['single'],
         },
         false,
         'order_desc'
@@ -314,7 +315,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         temperature: -40,
-        balance: -123.45
+        balance: -123.45,
       })
     ).toEqual('?temperature=-40&balance=-123.45');
   });
@@ -323,7 +324,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         small: 1e-10,
-        large: 1e10
+        large: 1e10,
       })
     ).toEqual('?small=1e-10&large=10000000000');
   });
@@ -333,7 +334,7 @@ describe('buildQueryString', () => {
       buildQueryString({
         inf: Infinity,
         negInf: -Infinity,
-        notANumber: NaN
+        notANumber: NaN,
       })
     ).toEqual('?inf=Infinity&negInf=-Infinity&notANumber=NaN');
   });
@@ -342,7 +343,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         phone: '+1234567890',
-        formula: '2+2=4'
+        formula: '2+2=4',
       })
     ).toEqual('?phone=%2B1234567890&formula=2%2B2%3D4');
   });
@@ -351,7 +352,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         discount: '50%',
-        encoded: '%20'
+        encoded: '%20',
       })
     ).toEqual('?discount=50%25&encoded=%2520');
   });
@@ -361,7 +362,7 @@ describe('buildQueryString', () => {
       buildQueryString({
         single: "it's",
         double: '"quoted"',
-        backtick: '`code`'
+        backtick: '`code`',
       })
     ).toEqual('?single=it%27s&double=%22quoted%22&backtick=%60code%60');
   });
@@ -370,7 +371,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         multiline: 'line1\nline2',
-        tabbed: 'col1\tcol2'
+        tabbed: 'col1\tcol2',
       })
     ).toEqual('?multiline=line1%0Aline2&tabbed=col1%09col2');
   });
@@ -379,7 +380,7 @@ describe('buildQueryString', () => {
     const sym = Symbol('test');
     expect(
       buildQueryString({
-        symbol: sym.toString()
+        symbol: sym.toString(),
       })
     ).toEqual('?symbol=Symbol(test)');
   });
@@ -388,7 +389,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString({
         maxInt: Number.MAX_SAFE_INTEGER,
-        minInt: Number.MIN_SAFE_INTEGER
+        minInt: Number.MIN_SAFE_INTEGER,
       })
     ).toEqual('?maxInt=9007199254740991&minInt=-9007199254740991');
   });
@@ -397,7 +398,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString(
         {
-          ITEMS: ['ONE', 'TWO', 'THREE']
+          ITEMS: ['ONE', 'TWO', 'THREE'],
         },
         true,
         true
@@ -412,18 +413,20 @@ describe('buildQueryString', () => {
           name: 'John',
           settings: {
             theme: 'dark',
-            notifications: true
-          }
-        }
+            notifications: true,
+          },
+        },
       })
-    ).toEqual('?user=%7B%22name%22%3A%22John%22%2C%22settings%22%3A%7B%22theme%22%3A%22dark%22%2C%22notifications%22%3Atrue%7D%7D');
+    ).toEqual(
+      '?user=%7B%22name%22%3A%22John%22%2C%22settings%22%3A%7B%22theme%22%3A%22dark%22%2C%22notifications%22%3Atrue%7D%7D'
+    );
   });
 
   it('should handle functions (toString)', () => {
     const func = function testFunc() {};
     expect(
       buildQueryString({
-        callback: func.toString()
+        callback: func.toString(),
       })
     ).toMatch(/^\?callback=function/);
   });
@@ -432,7 +435,7 @@ describe('buildQueryString', () => {
     expect(
       buildQueryString(
         {
-          items: ['a', 'b', 'c', 'd', 'e']
+          items: ['a', 'b', 'c', 'd', 'e'],
         },
         false,
         'array'
@@ -442,23 +445,15 @@ describe('buildQueryString', () => {
 
   it('should handle order_asc with large arrays', () => {
     const largeArray = Array.from({ length: 10 }, (_, i) => i);
-    const result = buildQueryString(
-      { items: largeArray },
-      false,
-      'order_asc'
-    );
+    const result = buildQueryString({ items: largeArray }, false, 'order_asc');
     expect(result).toContain('items[0]=0');
     expect(result).toContain('items[9]=9');
   });
 
   it('should handle order_desc with large arrays', () => {
     const largeArray = Array.from({ length: 5 }, (_, i) => i);
-    expect(
-      buildQueryString(
-        { items: largeArray },
-        false,
-        'order_desc'
-      )
-    ).toEqual('?items[4]=0&items[3]=1&items[2]=2&items[1]=3&items[0]=4');
+    expect(buildQueryString({ items: largeArray }, false, 'order_desc')).toEqual(
+      '?items[4]=0&items[3]=1&items[2]=2&items[1]=3&items[0]=4'
+    );
   });
 });

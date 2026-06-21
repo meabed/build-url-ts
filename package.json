@@ -17,15 +17,24 @@
     "querystring",
     "parameters",
     "params",
-    "queryparams"
+    "queryparams",
+    "typescript",
+    "esm",
+    "commonjs",
+    "bun"
   ],
   "homepage": "https://github.com/meabed/build-url-ts#readme",
   "bugs": {
-    "url": "https://github.com/meabed/build-url-ts/issues"
+    "url": "https://github.com/meabed/build-url-ts/issues",
+    "email": "mo@meabed.com"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/meabed/build-url-ts.git"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/meabed"
   },
   "license": "MIT",
   "author": {
@@ -40,38 +49,88 @@
       "url": "https://meabed.com"
     }
   ],
-  "main": "./dist/index.js",
+  "sideEffects": false,
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "unpkg": "./dist/index.umd.min.js",
+  "jsdelivr": "./dist/index.umd.min.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c rollup.config.mjs",
-    "build:prod": "NODE_ENV=production rollup -c rollup.config.mjs",
-    "lint": "eslint src/**/*.ts",
-    "prepublishOnly": "rm -rf dist/* && NODE_ENV=production rollup -c rollup.config.mjs",
-    "prettier": "prettier --write '**/*.{ts,tsx,css,scss}'",
-    "test": "jest",
-    "test-watch": "jest --watch"
+    "build": "rm -rf dist *.tsbuildinfo && rollup -c rollup.config.cjs",
+    "check": "biome check --write",
+    "check:exports": "publint --strict && attw --pack .",
+    "clean": "rm -rf dist coverage *.tsbuildinfo",
+    "dev": "rollup -c rollup.config.cjs --watch",
+    "format": "biome format --write",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "prepare": "if [ -z \"$CI\" ] && [ -e .git ] && [ -x ./node_modules/.bin/husky ]; then ./node_modules/.bin/husky; fi",
+    "prepublishOnly": "bun run build",
+    "release": "semantic-release",
+    "release:dry": "semantic-release --dry-run",
+    "release:local": "bun run scripts/release-local.mjs",
+    "test": "bun test",
+    "test:coverage": "bun test --coverage",
+    "test:watch": "bun test --watch",
+    "test-ci": "bun run test",
+    "typecheck": "tsc --pretty --skipLibCheck --noEmit && tsc --project tsconfig.test.json --pretty --skipLibCheck --noEmit"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": [
+      "biome check --write --no-errors-on-unmatched",
+      "biome format --write --no-errors-on-unmatched"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "biome format --write --no-errors-on-unmatched"
+    ]
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "4.6.3",
-    "@rollup/plugin-commonjs": "28.0.6",
-    "@rollup/plugin-node-resolve": "16.0.1",
-    "@rollup/plugin-replace": "6.0.2",
-    "@rollup/plugin-typescript": "12.1.4",
-    "@types/jasmine": "5.1.9",
-    "@types/jest": "30.0.0",
-    "typescript-eslint": "8.41.0",
-    "eslint": "9.34.0",
-    "eslint-config-prettier": "10.1.8",
-    "jest": "30.1.1",
-    "prettier": "3.6.2",
-    "rollup": "4.49.0",
-    "rollup-plugin-uglify": "6.0.4",
-    "ts-jest": "29.4.1",
-    "tslib": "2.8.1",
-    "typescript": "5.9.2"
+    "@arethetypeswrong/cli": "^0.18.3",
+    "@biomejs/biome": "^2.5.0",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/github": "^12.0.8",
+    "@semantic-release/npm": "^13.1.5",
+    "@semantic-release/release-notes-generator": "^14.1.1",
+    "@types/bun": "^1.3.14",
+    "@types/node": "^26.0.0",
+    "conventional-changelog-conventionalcommits": "^9.3.1",
+    "esbuild": "^0.28.1",
+    "husky": "9.1.7",
+    "lint-staged": "17.0.8",
+    "publint": "^0.3.21",
+    "rollup": "^4.62.2",
+    "rollup-plugin-dts": "^6.4.1",
+    "rollup-plugin-esbuild": "^6.2.1",
+    "semantic-release": "^25.0.5",
+    "typescript": "6.0.3"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "bun@1.3.14",
+  "engines": {
+    "bun": ">= 1.3",
+    "node": ">= 22.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
 }

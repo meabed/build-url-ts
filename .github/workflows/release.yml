@@ -1,53 +1,161 @@
 name: Release
+
+# Master/develop release pipeline. Validates first (same checks as CI), then
+# runs semantic-release to tag, publish to npm with provenance, and create the
+# GitHub release. Pre-releases on `develop` follow the same path — semantic-
+# release reads `.releaserc.json` for the per-branch policy.
+
 on:
   workflow_dispatch:
-  workflow_call:
+    inputs:
+      dry-run:
+        description: 'Run semantic-release in --dry-run mode (no publish)'
+        required: false
+        type: boolean
+        default: false
   push:
+    branches:
+      - master
+      - develop
     paths:
       - 'src/**'
-      - 'yarn.lock'
-    branches:
-      - 'master'
+      - 'package.json'
+      - 'bun.lock'
+      - '.releaserc.json'
 
-env:
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  CI: true
+# Never cancel an in-flight release — interrupting between npm publish and
+# git tag/GitHub release leaves the registry inconsistent. Queue instead.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
 
 jobs:
-  Release:
+  validate:
+    name: Validate before release
+    uses: ./.github/workflows/validate.yml
+    with:
+      # Pin to the current Active LTS for the release pipeline.
+      node-version: '24'
+      run-build: true
+
+  release:
+    name: Publish
+    needs: validate
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
 
     permissions:
-      packages: write
+      # contents: write — semantic-release pushes tags and version-bump commits
+      # issues / pull-requests: write — semantic-release-github comments on released PRs/issues
+      # id-token: write — required for npm provenance (sigstore attestations)
       contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
 
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - uses: styfle/cancel-workflow-action@0.12.1
+      - name: Checkout
+        uses: actions/checkout@v7
         with:
-          workflow_id: release.yml
-          access_token: ${{ github.token }}
+          # Full history is required so semantic-release can compute the next
+          # version from all commits since the previous tag.
+          fetch-depth: 0
+          persist-credentials: false
 
-      - uses: actions/checkout@v5
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          fetch-depth: 30
+          bun-version: '1.3'
 
-      - uses: FranzDiebold/github-env-vars-action@v2
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
+          # Active LTS — same version the validate job ran against.
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
 
-      - name: Yarn
-        run: yarn install --frozen-lockfile
+      - name: Cache Bun install
+        uses: actions/cache@v5
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
 
-      - name: Test
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bun run build
+
+      - name: Run semantic-release
+        id: semantic_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GIT_AUTHOR_NAME: Mohamed Meabed
+          GIT_AUTHOR_EMAIL: mo@meabed.com
+          GIT_COMMITTER_NAME: Mohamed Meabed
+          GIT_COMMITTER_EMAIL: mo@meabed.com
+          DRY_RUN: ${{ inputs.dry-run && '--dry-run' || '' }}
         run: |
-          yarn test
+          set -euo pipefail
+          # Plugins are pinned in devDependencies — installed via `bun install`
+          # above. Run via npx so the package-local versions are used; no
+          # `npm i -g` (slow + unpinned).
+          npx semantic-release $DRY_RUN 2>&1 | tee release-output.txt
 
-      - name: Release
+          # Surface the published version + tag for the summary step.
+          if grep -qE 'Published release|Created tag' release-output.txt; then
+            VERSION=$(grep -oP 'Published release \K[0-9]+\.[0-9]+\.[0-9]+(-[a-z0-9.]+)?' release-output.txt | head -1)
+            if [[ -z "$VERSION" ]]; then
+              VERSION=$(grep -oP 'Created tag v\K[0-9]+\.[0-9]+\.[0-9]+(-[a-z0-9.]+)?' release-output.txt | head -1)
+            fi
+            echo "release_published=true" >> "$GITHUB_OUTPUT"
+            echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+            echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+          else
+            echo "release_published=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Release summary
+        if: always()
+        env:
+          PUBLISHED: ${{ steps.semantic_release.outputs.release_published }}
+          VERSION: ${{ steps.semantic_release.outputs.version }}
+          TAG: ${{ steps.semantic_release.outputs.tag }}
+          DRY_RUN: ${{ inputs.dry-run }}
+          BRANCH: ${{ github.ref_name }}
+          COMMIT: ${{ github.sha }}
+          REPO: ${{ github.repository }}
         run: |
-          npm i -g semantic-release @semantic-release/git @semantic-release/github conventional-changelog-conventionalcommits
-          npx semantic-release --no-ci --debug
+          {
+            echo "## 📦 Release Summary"
+            echo
+            if [[ "$DRY_RUN" == "true" ]]; then
+              echo "### 🟡 Dry run — nothing published"
+              echo
+              echo "Re-run without \`dry-run\` input to publish."
+            elif [[ "$PUBLISHED" == "true" ]]; then
+              echo "### ✅ Published"
+              echo
+              echo "- **Version:** \`$VERSION\`"
+              echo "- **Tag:** \`$TAG\`"
+              echo "- **Branch:** \`$BRANCH\`"
+              echo "- **Commit:** \`$COMMIT\`"
+              echo
+              echo "### 🔗 Links"
+              echo "- [npm](https://www.npmjs.com/package/build-url-ts/v/$VERSION)"
+              echo "- [GitHub release](https://github.com/$REPO/releases/tag/$TAG)"
+            else
+              echo "### ℹ️ No release published"
+              echo
+              echo "semantic-release decided no release was warranted on \`$BRANCH\`. Common reasons:"
+              echo "- No \`feat\` / \`fix\` / \`perf\` commits since the last tag"
+              echo "- All new commits use non-release types (\`chore\`, \`docs\`, \`test\`, etc.)"
+              echo "- Branch isn't configured for release in \`.releaserc.json\`"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

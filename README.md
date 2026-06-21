@@ -7,15 +7,17 @@
 [![UNPKG](https://img.shields.io/badge/UNPKG-OK-179BD7.svg)](https://unpkg.com/browse/build-url-ts@latest/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A small, fast library for building URLs with a fluent API. Fully typed for TypeScript and works in Node.js and browsers.
+A small, fast, zero-dependency library for building URLs with a fluent API. Fully typed for TypeScript and runs anywhere JavaScript does — Node.js, Bun, Deno, edge runtimes, and all modern browsers.
 
 [![Edit build-url-ts-demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/build-url-ts-demo-qer8y?fontsize=14&hidenavigation=1&theme=dark)
 
 ## Features
 
-- 🚀 **Small & Fast** - Minimal footprint with zero dependencies
-- 📦 **TypeScript Support** - Full TypeScript definitions included
-- 🌐 **Universal** - Works in Node.js and all modern browsers
+- 🚀 **Small & Fast** - Minimal footprint with zero dependencies (~1.3 KB min+gzip)
+- 📦 **TypeScript Support** - Full TypeScript definitions for both ESM and CJS
+- 🔀 **Dual Package** - First-class ESM + CommonJS entry points, plus a UMD bundle for CDNs
+- 🌳 **Tree-shakeable** - Side-effect-free ESM; import only what you use
+- 🌐 **Universal** - Node.js, Bun, Deno, edge runtimes, and all modern browsers
 - 🔧 **Flexible** - Multiple ways to handle array query parameters
 - ✨ **Clean API** - Simple and intuitive interface
 - 🛡️ **Safe** - Properly encodes URLs and handles edge cases
@@ -25,6 +27,9 @@ A small, fast library for building URLs with a fluent API. Fully typed for TypeS
 ## Installation
 
 ```bash
+# bun
+bun add build-url-ts
+
 # npm
 npm install build-url-ts
 
@@ -50,6 +55,63 @@ const url = buildUrl('https://api.example.com', {
 // Result: https://api.example.com/users/123?tab=profile&limit=10
 ```
 
+## Module Formats & Platforms
+
+The package ships ESM, CommonJS, and a minified UMD bundle, with separate type
+declarations for each module system, so it works the same everywhere.
+
+### ESM — bundlers, Node, Bun
+
+```typescript
+import { buildUrl } from 'build-url-ts';
+```
+
+### CommonJS — `require()`
+
+```javascript
+const { buildUrl } = require('build-url-ts');
+```
+
+### Deno
+
+```typescript
+import { buildUrl } from 'npm:build-url-ts';
+```
+
+### Browser via CDN (`<script>`)
+
+The UMD build exposes a global `buildUrl`:
+
+```html
+<script src="https://unpkg.com/build-url-ts"></script>
+<script>
+  buildUrl.buildUrl('https://example.com', { path: 'about' });
+</script>
+```
+
+> For production, pin a version and add Subresource Integrity, e.g.
+> `<script src="https://unpkg.com/build-url-ts@6.2.0/dist/index.umd.min.js" integrity="sha384-…" crossorigin="anonymous"></script>`.
+
+Or as an ES module, no bundler required:
+
+```html
+<script type="module">
+  import { buildUrl } from 'https://esm.sh/build-url-ts';
+  console.log(buildUrl('https://example.com', { path: 'about' }));
+</script>
+```
+
+### Tree-shaking
+
+The library is published as side-effect-free ESM (`"sideEffects": false`), so
+bundlers drop everything you don't import. Pull in a single helper and only that
+helper ends up in your bundle:
+
+```typescript
+import { buildQueryString } from 'build-url-ts';
+// buildUrl, appendPath, buildHash are tree-shaken away
+```
+
 ## API Reference
 
 ### `buildUrl(baseUrl?, options?)`
@@ -65,7 +127,8 @@ Builds a complete URL from components.
 
 ```typescript
 interface IBuildUrlOptions {
-  path?: string | number;           // Path to append
+  path?: string | number;           // Single path segment
+  paths?: (string | number)[];      // Multiple path segments, appended in order
   queryParams?: IQueryParams;       // Query parameters object
   hash?: string | number;           // Hash/fragment identifier
   lowerCase?: boolean;              // Convert to lowercase
@@ -85,6 +148,12 @@ buildUrl('https://example.com', {
   path: 'about'
 });
 // → https://example.com/about
+
+// Multiple path segments (normalized and joined); `path` still works for one
+buildUrl('https://example.com', {
+  paths: ['about', '/my/', '/cat']
+});
+// → https://example.com/about/my/cat
 
 // With query parameters
 buildUrl('https://example.com', {
@@ -441,23 +510,32 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## Running Tests
+## Development
+
+This project uses [Bun](https://bun.sh) as its package manager, test runner, and script runner.
 
 ```bash
+# Install dependencies
+bun install
+
 # Run tests
-npm test
+bun test
 
 # Run tests in watch mode
-npm run test-watch
+bun run test:watch
 
-# Build the library
-npm run build
+# Run tests with coverage
+bun run test:coverage
 
-# Run linting
-npm run lint
+# Build the library (CJS + ESM + type declarations)
+bun run build
+
+# Lint and format (Biome)
+bun run lint
+bun run check
 
 # Type checking
-npm run typecheck
+bun run typecheck
 ```
 
 ### Test Coverage
